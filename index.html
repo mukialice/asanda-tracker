@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASANDA Project Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<style>
+:root{
+  --green:#2D6A4F;--green-light:#E8F5EE;--green-mid:#52B788;--green-dark:#1B4332;
+  --amber:#B5835A;--amber-light:#FDF3E7;
+  --red:#C0392B;--red-light:#FCEAE8;
+  --blue:#2C6BAC;--blue-light:#EBF3FB;
+  --purple:#534AB7;--purple-light:#EEEDFE;
+  --bg:#F8F7F4;--surface:#FFFFFF;--surface2:#F2F0EC;
+  --border:#E5E2DB;--border-dark:#C8C4BB;
+  --text:#1C1B18;--text2:#6B6860;--text3:#A09D97;
+  --radius:10px;--radius-lg:14px;--shadow:0 1px 3px rgba(0,0,0,.07),0 4px 12px rgba(0,0,0,.05);
+  --font:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);font-size:15px;color:var(--text);background:var(--bg);min-height:100vh}
+.app{display:flex;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;background:var(--green-dark);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidebar-logo .name{font-size:18px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.sidebar-logo .sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px}
+.sidebar-nav{flex:1;padding:12px 10px;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.65);font-size:14px;font-weight:400;margin-bottom:2px;transition:all .15s;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-item.active{background:rgba(255,255,255,.15);color:#fff;font-weight:500}
+.nav-item i{font-size:17px}
+.sidebar-user{padding:14px 10px;border-top:1px solid rgba(255,255,255,.1)}
+.user-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#fff;padding:8px 10px;font-size:13px;font-family:var(--font);cursor:pointer}
+.user-select option{color:var(--text);background:#fff}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+.topbar-title{font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+.content{flex:1;padding:28px;max-width:1000px;width:100%}
+button,input,select,textarea{font-family:var(--font)}
+.btn{border:1px solid var(--border);border-radius:8px;padding:8px 16px;font-size:13.5px;background:var(--surface);color:var(--text);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px;font-weight:400}
+.btn:hover{background:var(--surface2);border-color:var(--border-dark)}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--green);color:#fff;border-color:var(--green);font-weight:500}
+.btn-primary:hover{background:var(--green-dark);border-color:var(--green-dark)}
+.btn-sm{padding:5px 10px;font-size:13px}
+.btn-icon{padding:7px;border-radius:8px}
+input[type=text],input[type=date],input[type=email],select,textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:14px;background:var(--surface);color:var(--text);transition:border .15s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green-mid);box-shadow:0 0 0 3px rgba(82,183,136,.12)}
+label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;margin-top:12px;font-weight:500}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card-title{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text)}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px;box-shadow:var(--shadow)}
+.stat-num{font-size:28px;font-weight:600;color:var(--text);letter-spacing:-1px}
+.stat-lbl{font-size:12px;color:var(--text2);margin-top:3px;font-weight:500}
+.task-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:8px;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:border-color .15s}
+.task-row:hover{border-color:var(--border-dark)}
+.task-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:5px;line-height:1.4}
+.task-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--text2)}
+.task-meta span{display:flex;align-items:center;gap:4px}
+.task-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:500;white-space:nowrap}
+.b-todo{background:var(--surface2);color:var(--text2)}
+.b-inprog{background:var(--blue-light);color:var(--blue)}
+.b-done{background:var(--green-light);color:var(--green)}
+.b-overdue{background:var(--red-light);color:var(--red)}
+.b-new{background:var(--purple-light);color:var(--purple)}
+.b-update{background:var(--green-light);color:var(--green)}
+.alert{border-radius:8px;padding:8px 12px;font-size:13px;margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.alert-7{background:var(--amber-light);color:var(--amber);border:1px solid #F0C89A}
+.alert-3{background:#FAECE7;color:#993C1D;border:1px solid #F0997B}
+.alert-1{background:var(--red-light);color:var(--red);border:1px solid #F09595}
+.alert a{color:inherit;font-weight:500;margin-left:6px;text-decoration:none}
+.alert a:hover{text-decoration:underline}
+.banner{border-radius:10px;padding:12px 16px;font-size:13px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.banner-green{background:var(--green-light);color:var(--green-dark);border:1px solid #A8D5BE}
+.banner-blue{background:var(--blue-light);color:var(--blue);border:1px solid #B5D4F4}
+.banner-red{background:var(--red-light);color:var(--red);border:1px solid #F09595}
+.banner-amber{background:var(--amber-light);color:var(--amber);border:1px solid #F0C89A}
+.upload-zone{border:2px dashed var(--border-dark);border-radius:var(--radius-lg);padding:24px;text-align:center;cursor:pointer;color:var(--text2);transition:all .15s}
+.upload-zone:hover{border-color:var(--green-mid);color:var(--green);background:var(--green-light)}
+.preview-match{border-left:3px solid var(--green-mid);padding-left:12px;margin-bottom:12px;font-size:13px}
+.preview-new{border-left:3px solid var(--purple);padding-left:12px;margin-bottom:12px;font-size:13px}
+.diff-chip{display:inline-block;font-size:11px;padding:2px 7px;border-radius:8px;background:var(--green-light);color:var(--green);margin-right:4px;margin-top:3px}
+.note-entry{border-left:2px solid var(--border-dark);padding:6px 12px;margin-bottom:8px;font-size:13px}
+.note-meta{font-size:11px;color:var(--text3);margin-bottom:3px}
+.attach-pill{display:inline-flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:12px;cursor:pointer;margin:2px}
+.attach-pill:hover{border-color:var(--border-dark)}
+.attach-zone{border:2px dashed var(--border);border-radius:8px;padding:14px;text-align:center;font-size:13px;color:var(--text2);cursor:pointer;margin-top:10px;transition:all .15s}
+.attach-zone:hover{border-color:var(--green-mid);color:var(--green)}
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:1000;padding:16px}
+.modal-box{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);padding:24px;width:620px;max-width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.15)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.step-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;font-weight:600;flex-shrink:0;margin-right:8px}
+.how-step{display:flex;align-items:flex-start;margin-bottom:10px;font-size:13px;color:var(--text2);line-height:1.6}
+.export-panel{border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;margin-bottom:12px;background:var(--surface);box-shadow:var(--shadow)}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--green);flex-shrink:0}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.section-hdr h2{font-size:17px;font-weight:600;color:var(--text);letter-spacing:-.3px}
+.empty{text-align:center;padding:40px 20px;color:var(--text2)}
+.empty i{font-size:36px;display:block;margin-bottom:10px;color:var(--text3)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;vertical-align:-2px;margin-right:6px}
+.spin-dark{border-color:var(--border);border-top-color:var(--green)}
+@keyframes sp{to{transform:rotate(360deg)}}
+.sync-indicator{font-size:12px;color:var(--text3);display:flex;align-items:center;gap:5px}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green-mid);flex-shrink:0}
+.sync-dot.syncing{animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@media(max-width:680px){.sidebar{display:none}.content{padding:16px}.stats-grid{grid-template-columns:1fr 1fr}.topbar{padding:12px 16px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="name"><i class="ti ti-plant-2"></i> ASANDA</div>
+    <div class="sub">Project Tracker</div>
+  </div>
+  <nav class="sidebar-nav">
+    <button class="nav-item active" data-tab="dashboard"><i class="ti ti-chart-bar"></i> Dashboard</button>
+    <button class="nav-item" data-tab="upload"><i class="ti ti-upload"></i> Upload Notes</button>
+    <button class="nav-item" data-tab="tasks"><i class="ti ti-checklist"></i> Tasks</button>
+    <button class="nav-item" data-tab="meetings"><i class="ti ti-file-description"></i> Meetings</button>
+    <button class="nav-item" data-tab="team"><i class="ti ti-users"></i> Team</button>
+    <button class="nav-item" data-tab="export"><i class="ti ti-download"></i> Export</button>
+  </nav>
+  <div class="sidebar-user">
+    <div style="font-size:11px;color:rgba(255,255,255,.45);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.5px">Signed in as</div>
+    <select class="user-select" id="current-user">
+      <option value="">— select name —</option>
+      <option>Mukami</option><option>Koko</option><option>Wasye</option><option>Chox</option><option>Kathe</option>
+    </select>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbar-title">Dashboard</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="sync-indicator"><div class="sync-dot" id="sync-dot"></div><span id="sync-label">Connected</span></div>
+      <div id="save-error" style="display:none" class="banner banner-red" style="margin:0;padding:6px 12px;font-size:12px"><i class="ti ti-alert-circle"></i> Save failed</div>
+      <button class="btn btn-sm" id="refresh-btn"><i class="ti ti-refresh"></i> Refresh</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div id="sec-dashboard" class="section">
+      <div id="notif-area"></div>
+      <div class="stats-grid">
+        <div class="stat"><div class="stat-num" id="stat-total">—</div><div class="stat-lbl">Total tasks</div></div>
+        <div class="stat"><div class="stat-num" id="stat-open">—</div><div class="stat-lbl">Open</div></div>
+        <div class="stat"><div class="stat-num" id="stat-done">—</div><div class="stat-lbl">Completed</div></div>
+      </div>
+      <div id="dash-tasks"><div class="empty"><i class="ti ti-loader" style="animation:sp 1s linear infinite"></i><div>Loading...</div></div></div>
+    </div>
+
+    <!-- UPLOAD -->
+    <div id="sec-upload" class="section" style="display:none">
+      <div class="card">
+        <div class="card-title">How it works</div>
+        <div class="how-step"><span class="step-badge">1</span>Paste notes or upload a .txt file below, then click <strong>"Send to Claude ↗"</strong></div>
+        <div class="how-step"><span class="step-badge">2</span>Claude replies in the chat with a JSON task list</div>
+        <div class="how-step"><span class="step-badge">3</span>Copy Claude's full reply, paste it below, click <strong>"Preview tasks"</strong> then Confirm</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Step 1 — meeting notes</div>
+        <div class="upload-zone" id="drop-zone"><i class="ti ti-upload" style="font-size:26px;display:block;margin-bottom:6px"></i><strong>Click to upload a .txt file</strong><div style="font-size:12px;margin-top:4px">Or paste your notes below</div></div>
+        <input type="file" id="file-input" accept=".txt,.text" style="display:none">
+        <label class="lbl" style="margin-top:14px">Meeting title</label>
+        <input type="text" id="meeting-title" placeholder="e.g. ASANDA — June 2026">
+        <label class="lbl">Notes or transcript</label>
+        <textarea id="notes-input" rows="8" placeholder="Paste meeting notes or raw speaker transcript here..."></textarea>
+        <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+          <button class="btn" id="clear-btn"><i class="ti ti-x"></i> Clear</button>
+          <button class="btn btn-primary" id="send-btn"><i class="ti ti-send"></i> Send to Claude ↗</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Step 3 — paste Claude's reply &amp; preview</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Copy Claude's full reply (the ```json [ ... ] ``` block) and paste here. You'll see a preview before anything saves.</p>
+        <label class="lbl" style="margin-top:0">Meeting title for this import</label>
+        <input type="text" id="import-title" placeholder="Should match title above">
+        <label class="lbl">Paste Claude's reply here</label>
+        <textarea id="json-paste" rows="5" placeholder="Paste the full reply from Claude here..."></textarea>
+        <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+          <button class="btn" id="clear-paste-btn"><i class="ti ti-x"></i> Clear</button>
+          <button class="btn btn-primary" id="preview-btn"><i class="ti ti-eye"></i> Preview tasks</button>
+        </div>
+        <div id="import-status" style="margin-top:10px;font-size:13px;text-align:center"></div>
+      </div>
+      <div id="preview-panel" style="display:none" class="card">
+        <div id="preview-content"></div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
+          <button class="btn" id="cancel-import-btn"><i class="ti ti-x"></i> Cancel</button>
+          <button class="btn btn-primary" id="confirm-import-btn"><i class="ti ti-check"></i> Confirm &amp; import</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TASKS -->
+    <div id="sec-tasks" class="section" style="display:none">
+      <div class="section-hdr">
+        <h2>Tasks</h2>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          <select id="filter-status" style="width:auto;font-size:13px;padding:7px 10px">
+            <option value="">All statuses</option>
+            <option value="To Do">To Do</option><option value="In Progress">In Progress</option>
+            <option value="Done">Done</option><option value="Overdue">Overdue</option>
+          </select>
+          <select id="filter-owner" style="width:auto;font-size:13px;padding:7px 10px"><option value="">All owners</option></select>
+          <button class="btn btn-sm" id="my-tasks-btn"><i class="ti ti-user"></i> My tasks</button>
+          <button class="btn btn-sm" id="clear-filter-btn">All</button>
+          <button class="btn btn-primary btn-sm" id="add-task-btn"><i class="ti ti-plus"></i> Add task</button>
+        </div>
+      </div>
+      <div id="tasks-list"></div>
+      <div id="add-task-form" style="display:none" class="card">
+        <div class="card-title">New task</div>
+        <label class="lbl" style="margin-top:0">Description</label>
+        <input type="text" id="nt-desc" placeholder="What needs to be done?">
+        <div class="g2">
+          <div><label class="lbl">Owner</label><input type="text" id="nt-owner" placeholder="Name"></div>
+          <div><label class="lbl">Due date</label><input type="date" id="nt-due"></div>
+        </div>
+        <div class="g2">
+          <div><label class="lbl">Status</label><select id="nt-status"><option>To Do</option><option>In Progress</option><option>Done</option></select></div>
+          <div><label class="lbl">Source meeting</label><input type="text" id="nt-source" placeholder="Optional"></div>
+        </div>
+        <label class="lbl">Notes</label>
+        <textarea id="nt-notes" rows="2" placeholder="Optional context..."></textarea>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+          <button class="btn" id="cancel-add-btn">Cancel</button>
+          <button class="btn btn-primary" id="save-new-task-btn"><i class="ti ti-check"></i> Save task</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEETINGS -->
+    <div id="sec-meetings" class="section" style="display:none">
+      <div class="section-hdr"><h2>Meeting Notes</h2></div>
+      <div id="meetings-list"></div>
+    </div>
+
+    <!-- TEAM -->
+    <div id="sec-team" class="section" style="display:none">
+      <div class="section-hdr"><h2>Team</h2></div>
+      <div class="card">
+        <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Team data is shared across all members. Email addresses enable due date reminder links.</p>
+        <div id="team-list"></div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <input type="text" id="nm-name" placeholder="Full name" style="flex:1">
+          <input type="email" id="nm-email" placeholder="email@example.com" style="flex:2">
+          <button class="btn btn-primary" id="add-member-btn"><i class="ti ti-plus"></i> Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPORT -->
+    <div id="sec-export" class="section" style="display:none">
+      <div class="section-hdr"><h2>Export</h2></div>
+      <div class="export-panel">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+          <i class="ti ti-table" style="font-size:26px;color:var(--green)"></i>
+          <div style="flex:1"><div style="font-weight:600;font-size:14px">CSV — Excel &amp; Google Sheets</div><div style="font-size:12px;color:var(--text2)">Generate CSV, copy all, paste into cell A1 of a blank spreadsheet</div></div>
+          <button class="btn btn-primary btn-sm" id="gen-csv-btn"><i class="ti ti-refresh"></i> Generate</button>
+        </div>
+        <div id="csv-output" style="display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:12px;color:var(--text2)">Select all → Ctrl+A then Ctrl+C</span>
+            <button class="btn btn-sm" id="copy-csv-btn"><i class="ti ti-copy"></i> Copy all</button>
+          </div>
+          <textarea id="csv-text" rows="8" style="font-family:var(--mono);font-size:11px;background:var(--surface2)" readonly></textarea>
+          <div id="copy-csv-status" style="font-size:12px;margin-top:4px;text-align:right;color:var(--green)"></div>
+        </div>
+      </div>
+      <div class="export-panel">
+        <div style="display:flex;align-items:center;gap:12px">
+          <i class="ti ti-file-word" style="font-size:26px;color:var(--blue)"></i>
+          <div style="flex:1"><div style="font-weight:600;font-size:14px">Word or Excel file via Claude</div><div style="font-size:12px;color:var(--text2)">Open Claude in a new tab, paste the prompt, and Claude will generate a downloadable file</div></div>
+          <button class="btn btn-primary btn-sm" id="send-export-btn"><i class="ti ti-copy"></i> Copy prompt</button>
+        </div>
+        <div id="export-copy-msg" style="font-size:12px;color:var(--green);margin-top:8px;display:none">✓ Copied! Paste into Claude to generate your Word/Excel file.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+<div id="modal-root"></div>
+
+<script>
+(function(){
+// ── Supabase config ──────────────────────────────────────────
+var SB_URL='https://oijdxioflcfhyaytasnd.supabase.co';
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pamR4aW9mbGNmaHlheXRhc25kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NjEwNTYsImV4cCI6MjA5NjMzNzA1Nn0.e87STX8gwulPrFZcZe03lfCvmzArdHGb5IqmwL7ygLE';
+var TABLE='asanda_store';
+
+// ── Supabase REST helpers ────────────────────────────────────
+async function sbGet(key){
+  try{
+    var r=await fetch(SB_URL+'/rest/v1/'+TABLE+'?key=eq.'+encodeURIComponent(key)+'&select=value',{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'}
+    });
+    if(!r.ok)return null;
+    var d=await r.json();
+    return d&&d.length?JSON.parse(d[0].value):null;
+  }catch(e){return null;}
+}
+async function sbSet(key,value){
+  try{
+    setSyncing(true);
+    var r=await fetch(SB_URL+'/rest/v1/'+TABLE,{
+      method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},
+      body:JSON.stringify({key:key,value:JSON.stringify(value),updated_at:new Date().toISOString()})
+    });
+    setSyncing(false);
+    if(!r.ok){var e=await r.text();console.error('sbSet error:',e);showSaveError(true);return false;}
+    showSaveError(false);return true;
+  }catch(e){setSyncing(false);showSaveError(true);console.error('sbSet exception:',e);return false;}
+}
+function setSyncing(v){
+  var dot=document.getElementById('sync-dot');
+  var lbl=document.getElementById('sync-label');
+  if(v){dot.classList.add('syncing');lbl.textContent='Saving...';}
+  else{dot.classList.remove('syncing');lbl.textContent='Synced';}
+}
+function showSaveError(v){document.getElementById('save-error').style.display=v?'flex':'none';}
+
+// ── App state ────────────────────────────────────────────────
+var tasks=[],meetings=[],team=[],attachments={},tnotes={};
+var currentUser='';
+var pendingItems=[],pendingTitle='';
+
+// ── Keys ─────────────────────────────────────────────────────
+var TK='asanda_tasks_v3',MK='asanda_meetings_v3',TEAMK='asanda_team_v3',ATK='asanda_attach_v3',NK='asanda_notes_v3';
+
+async function loadAll(){
+  setSyncing(true);
+  var results=await Promise.all([sbGet(TK),sbGet(MK),sbGet(TEAMK),sbGet(ATK),sbGet(NK)]);
+  tasks=results[0]||[];meetings=results[1]||[];team=results[2]||[];
+  attachments=results[3]||{};tnotes=results[4]||{};
+  setSyncing(false);
+  checkOverdue();renderAll();
+}
+async function saveTasks(){await sbSet(TK,tasks);}
+async function saveMeetings(){await sbSet(MK,meetings);}
+async function saveTeam(){await sbSet(TEAMK,team);}
+async function saveAttach(){await sbSet(ATK,attachments);}
+async function saveNotes(){await sbSet(NK,tnotes);}
+
+// ── Helpers ──────────────────────────────────────────────────
+function uid(){return Date.now().toString(36)+Math.random().toString(36).substr(2,5);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function initials(n){return n.split(' ').map(function(w){return w[0]||'';}).join('').toUpperCase().substr(0,2);}
+function fmtDate(d){if(!d)return'';var p=d.split('-');return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function shortName(n){return n&&n.length>20?n.slice(0,17)+'...':n;}
+function fileIcon(n){return{pdf:'file-type-pdf',doc:'file-type-doc',docx:'file-type-doc',xls:'file-type-xls',xlsx:'file-type-xls',png:'photo',jpg:'photo',jpeg:'photo',txt:'file-text',csv:'table'}[(n||'').split('.').pop().toLowerCase()]||'file';}
+function todayStr(){return new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function checkOverdue(){
+  var now=new Date();now.setHours(0,0,0,0);
+  tasks.forEach(function(t){
+    if(t.dueDate){
+      if(t.status!='Done'&&new Date(t.dueDate+'T00:00:00')<now)t.status='Overdue';
+      else if(t.status=='Overdue'&&new Date(t.dueDate+'T00:00:00')>=now)t.status='To Do';
+    }
+  });
+}
+function daysUntil(ds){if(!ds)return null;var n=new Date();n.setHours(0,0,0,0);return Math.round((new Date(ds+'T00:00:00')-n)/86400000);}
+function requireUser(){if(!currentUser){alert('Please select your name in the sidebar first.');return false;}return true;}
+function renderAll(){renderDashboard();renderTasks();renderMeetings();renderTeam();}
+
+// ── User ─────────────────────────────────────────────────────
+document.getElementById('current-user').addEventListener('change',function(){currentUser=this.value;});
+document.getElementById('refresh-btn').addEventListener('click',function(){
+  var btn=this;btn.innerHTML='<span class="spin spin-dark"></span> Loading...';btn.disabled=true;
+  loadAll().then(function(){btn.innerHTML='<i class="ti ti-refresh"></i> Refresh';btn.disabled=false;});
+});
+
+// ── Tabs ─────────────────────────────────────────────────────
+var tabTitles={dashboard:'Dashboard',upload:'Upload Notes',tasks:'Tasks',meetings:'Meeting Notes',team:'Team',export:'Export'};
+document.querySelectorAll('.nav-item[data-tab]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var name=this.getAttribute('data-tab');
+    document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active');});
+    document.querySelectorAll('.section').forEach(function(s){s.style.display='none';});
+    this.classList.add('active');
+    document.getElementById('sec-'+name).style.display='block';
+    document.getElementById('topbar-title').textContent=tabTitles[name]||name;
+    if(name==='tasks')renderTasks();
+  });
+});
+function goTab(name){
+  document.querySelectorAll('.nav-item').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===name);});
+  document.querySelectorAll('.section').forEach(function(s){s.style.display='none';});
+  document.getElementById('sec-'+name).style.display='block';
+  document.getElementById('topbar-title').textContent=tabTitles[name]||name;
+  if(name==='tasks')renderTasks();
+}
+
+// ── Dashboard ────────────────────────────────────────────────
+function renderDashboard(){
+  document.getElementById('stat-total').textContent=tasks.length;
+  document.getElementById('stat-done').textContent=tasks.filter(function(t){return t.status=='Done';}).length;
+  document.getElementById('stat-open').textContent=tasks.filter(function(t){return t.status!='Done';}).length;
+  var urg=tasks.filter(function(t){if(t.status=='Done')return false;var d=daysUntil(t.dueDate);return d!==null&&d>=0&&d<=7;});
+  document.getElementById('notif-area').innerHTML=urg.length
+    ?'<div class="banner banner-blue"><i class="ti ti-bell"></i><strong>'+urg.length+' task'+(urg.length!=1?'s':'')+' due within 7 days</strong></div>':'';
+  var up=tasks.filter(function(t){return t.status!='Done';}).sort(function(a,b){return!a.dueDate?1:!b.dueDate?-1:new Date(a.dueDate)-new Date(b.dueDate);}).slice(0,8);
+  document.getElementById('dash-tasks').innerHTML=tasks.length
+    ?'<div style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Upcoming tasks</div>'+up.map(function(t){return tCard(t,true);}).join('')
+    :'<div class="empty"><i class="ti ti-upload"></i><div>Upload meeting notes to get started</div></div>';
+}
+
+function tCard(t,compact){
+  var d=daysUntil(t.dueDate),alrt='';
+  if(t.status!='Done'&&d!==null){
+    if(d<0)alrt='<div class="alert alert-1"><i class="ti ti-alert-circle"></i> Overdue by '+Math.abs(d)+' day'+(Math.abs(d)!=1?'s':'')+emailBtn(t)+'</div>';
+    else if(d<=1)alrt='<div class="alert alert-1"><i class="ti ti-alert-circle"></i> Due tomorrow!'+emailBtn(t)+'</div>';
+    else if(d<=3)alrt='<div class="alert alert-3"><i class="ti ti-clock"></i> Due in '+d+' days'+emailBtn(t)+'</div>';
+    else if(d<=7)alrt='<div class="alert alert-7"><i class="ti ti-clock"></i> Due in '+d+' days'+emailBtn(t)+'</div>';
+  }
+  var bc=t.status=='Done'?'b-done':t.status=='In Progress'?'b-inprog':t.status=='Overdue'?'b-overdue':'b-todo';
+  var atts=attachments[t.id]||[],nts=tnotes[t.id]||[];
+  var attHtml=atts.length?'<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:2px">'+atts.map(function(a){return'<span class="attach-pill" data-tid="'+t.id+'" data-aid="'+a.id+'"><i class="ti ti-paperclip" style="font-size:12px"></i>'+esc(shortName(a.name))+'</span>';}).join('')+'</div>':'';
+  var noteSnip=nts.length?'<div style="margin-top:5px;font-size:12px;color:var(--text2);font-style:italic">'+esc(nts[nts.length-1].text.substring(0,90))+(nts[nts.length-1].text.length>90?'…':'')+'</div>':'';
+  var editedBy=t.lastEditedBy?'<span><i class="ti ti-pencil"></i>'+esc(t.lastEditedBy)+'</span>':'';
+  return'<div class="task-row" id="trow-'+t.id+'">'
+    +'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">'
+    +'<div style="flex:1;min-width:0">'
+    +'<div class="task-title">'+esc(t.description)+'</div>'
+    +'<div class="task-meta">'
+    +(t.owner?'<span><i class="ti ti-user"></i>'+esc(t.owner)+'</span>':'')
+    +(t.dueDate?'<span><i class="ti ti-calendar"></i>'+fmtDate(t.dueDate)+'</span>':'')
+    +(t.source?'<span><i class="ti ti-file"></i>'+esc(t.source)+'</span>':'')
+    +(nts.length?'<span><i class="ti ti-notes"></i>'+nts.length+' note'+(nts.length!=1?'s':'')+'</span>':'')
+    +editedBy+'</div>'
+    +attHtml+noteSnip+'</div>'
+    +'<div class="task-actions">'
+    +'<span class="badge '+bc+'">'+t.status+'</span>'
+    +(compact?'':
+      ' <button class="btn btn-icon btn-sm task-notes-btn" data-id="'+t.id+'" title="Notes"><i class="ti ti-notes"></i></button>'
+      +'<button class="btn btn-icon btn-sm task-attach-btn" data-id="'+t.id+'" title="Attachments"><i class="ti ti-paperclip"></i></button>'
+      +'<button class="btn btn-icon btn-sm task-edit-btn" data-id="'+t.id+'" title="Edit"><i class="ti ti-edit"></i></button>'
+      +'<button class="btn btn-icon btn-sm task-del-btn" data-id="'+t.id+'" title="Delete"><i class="ti ti-trash"></i></button>')
+    +'</div></div>'+alrt+'</div>';
+}
+
+function emailBtn(t){
+  var m=team.find(function(x){return x.name.toLowerCase()===(t.owner||'').toLowerCase();});
+  if(!m||!m.email)return'';
+  var days=daysUntil(t.dueDate);
+  var s=encodeURIComponent('Reminder: "'+t.description+'" due '+fmtDate(t.dueDate));
+  var b=encodeURIComponent('Hi '+t.owner+',\n\nThis is a reminder that the following task is due '+(days<=0?'today/overdue':days==1?'tomorrow':'in '+days+' days')+':\n\nTask: '+t.description+'\nDue: '+fmtDate(t.dueDate)+'\nStatus: '+t.status+'\n\nPlease update your status when complete.\n\nThank you!');
+  return' <a href="mailto:'+m.email+'?subject='+s+'&body='+b+'"><i class="ti ti-mail"></i> Send reminder</a>';
+}
+
+function renderTasks(){
+  var fs=document.getElementById('filter-status').value,fo=document.getElementById('filter-owner').value;
+  var owners=[...new Set(tasks.map(function(t){return t.owner;}).filter(Boolean))];
+  var sel=document.getElementById('filter-owner'),prev=sel.value;
+  sel.innerHTML='<option value="">All owners</option>'+owners.map(function(o){return'<option'+(o==prev?' selected':'')+'>'+esc(o)+'</option>';}).join('');
+  if(prev)sel.value=prev;
+  var list=tasks.filter(function(t){return(!fs||t.status==fs)&&(!fo||t.owner==fo);}).sort(function(a,b){return!a.dueDate?1:!b.dueDate?-1:new Date(a.dueDate)-new Date(b.dueDate);});
+  document.getElementById('tasks-list').innerHTML=list.length?list.map(function(t){return tCard(t,false);}).join(''):'<div class="empty"><i class="ti ti-check"></i><div>No tasks found</div></div>';
+}
+
+function renderMeetings(){
+  document.getElementById('meetings-list').innerHTML=meetings.length
+    ?meetings.slice().reverse().map(function(m){
+      var tc=tasks.filter(function(t){return t.source==m.title;}).length;
+      return'<div class="task-row"><div style="display:flex;justify-content:space-between;align-items:center">'
+        +'<div><div style="font-weight:500;font-size:14px;margin-bottom:4px">'+esc(m.title)+'</div>'
+        +'<div class="task-meta">'+m.date+(tc?' <span>'+tc+' task'+(tc!=1?'s':'')+'</span>':'')+(m.updated?' <span style="color:var(--green)">'+m.updated+' updated</span>':'')+(m.added?' <span style="color:var(--purple)">'+m.added+' new</span>':'')+(m.by?' <span><i class="ti ti-user"></i>'+esc(m.by)+'</span>':'')+'</div></div>'
+        +'<button class="btn btn-icon btn-sm meet-del-btn" data-id="'+m.id+'"><i class="ti ti-trash"></i></button>'
+        +'</div></div>';
+    }).join(''):'<div class="empty"><i class="ti ti-file-description"></i><div>No meetings uploaded yet</div></div>';
+}
+
+function renderTeam(){
+  document.getElementById('team-list').innerHTML=team.length
+    ?team.map(function(m){return'<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div class="avatar">'+initials(m.name)+'</div><div style="flex:1"><div style="font-weight:500;font-size:14px">'+esc(m.name)+'</div><div style="font-size:12px;color:var(--text2)">'+esc(m.email)+'</div></div><button class="btn btn-icon btn-sm member-del-btn" data-id="'+m.id+'"><i class="ti ti-trash"></i></button></div>';}).join('')
+    :'<div style="color:var(--text2);font-size:13px;padding:8px 0">No team members yet.</div>';
+}
+
+// ── Event delegation ─────────────────────────────────────────
+document.body.addEventListener('click',function(e){
+  var el=e.target.closest('button,.attach-pill');if(!el)return;
+  if(el.classList.contains('task-notes-btn')){openNotesModal(el.dataset.id);return;}
+  if(el.classList.contains('task-attach-btn')){openAttachModal(el.dataset.id);return;}
+  if(el.classList.contains('task-edit-btn')){editTask(el.dataset.id);return;}
+  if(el.classList.contains('task-del-btn')){delTask(el.dataset.id);return;}
+  if(el.classList.contains('meet-del-btn')){delMeeting(el.dataset.id);return;}
+  if(el.classList.contains('member-del-btn')){delMember(el.dataset.id);return;}
+  if(el.classList.contains('attach-pill')){previewAttach(el.dataset.tid,el.dataset.aid);return;}
+});
+document.getElementById('filter-status').addEventListener('change',renderTasks);
+document.getElementById('filter-owner').addEventListener('change',renderTasks);
+document.getElementById('my-tasks-btn').addEventListener('click',function(){
+  if(!currentUser){alert('Select your name in the sidebar first.');return;}
+  document.getElementById('filter-owner').value=currentUser;renderTasks();
+});
+document.getElementById('clear-filter-btn').addEventListener('click',function(){
+  document.getElementById('filter-status').value='';document.getElementById('filter-owner').value='';renderTasks();
+});
+
+// ── Upload ───────────────────────────────────────────────────
+document.getElementById('drop-zone').addEventListener('click',function(){document.getElementById('file-input').click();});
+document.getElementById('file-input').addEventListener('change',function(e){
+  var f=e.target.files[0];if(!f)return;
+  if(!document.getElementById('meeting-title').value)document.getElementById('meeting-title').value=f.name.replace(/\.[^.]+$/,'');
+  var r=new FileReader();r.onload=function(ev){document.getElementById('notes-input').value=ev.target.result;};r.readAsText(f);e.target.value='';
+});
+document.getElementById('clear-btn').addEventListener('click',function(){document.getElementById('notes-input').value='';document.getElementById('meeting-title').value='';});
+document.getElementById('send-btn').addEventListener('click',function(){
+  var notes=document.getElementById('notes-input').value.trim();
+  var title=document.getElementById('meeting-title').value.trim()||'Meeting '+(new Date().toLocaleDateString());
+  if(!notes){alert('Please paste or upload meeting notes first.');return;}
+  document.getElementById('import-title').value=title;
+  var existSum=tasks.slice(0,50).map(function(t,i){return i+'. id:'+t.id+' | '+t.description+(t.owner?' | owner:'+t.owner:'')+(t.dueDate?' | due:'+t.dueDate:'')+(t.status?' | status:'+t.status:'');}).join('\n');
+  var tod=new Date().toISOString().split('T')[0];
+  var prompt='TASK_EXTRACTION_REQUEST\nMeeting title: "'+title+'"\nToday: '+tod+'\n\nExisting tasks:\n'+(existSum||'(none yet)')+'\n\nInstructions: Extract all action items. Input may be notes or raw transcript — handle both, ignore small talk. For each task check if it matches an existing task. Return ONLY a ```json [...] ``` code block. Each item: description, owner, dueDate (YYYY-MM-DD or ""), status, contextNote, matchedId, changedFields.\n\nContent:\n---\n'+notes.substring(0,6000)+'\n---';
+  var ta=document.createElement('textarea');ta.value=prompt;ta.style.position='fixed';ta.style.top='-9999px';document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(ta);
+  showModal('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-weight:600;font-size:15px">Prompt copied!</div><button class="btn btn-icon btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button></div>'
+    +'<p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px">The extraction prompt has been copied to your clipboard. Here\'s what to do next:</p>'
+    +'<div style="font-size:13px;line-height:2">'
+    +'<div><strong>1.</strong> Open <a href="https://claude.ai" target="_blank" style="color:var(--blue)">claude.ai</a> in a new tab</div>'
+    +'<div><strong>2.</strong> Paste the prompt (Ctrl+V) and send it</div>'
+    +'<div><strong>3.</strong> Copy Claude\'s full reply (the ```json``` block)</div>'
+    +'<div><strong>4.</strong> Come back here, paste into Step 3, and click Preview</div>'
+    +'</div>'
+    +'<div style="margin-top:14px;text-align:right"><button class="btn btn-primary" onclick="closeModal()">Got it</button></div>');
+});
+document.getElementById('clear-paste-btn').addEventListener('click',function(){document.getElementById('json-paste').value='';document.getElementById('import-status').textContent='';document.getElementById('preview-panel').style.display='none';});
+
+document.getElementById('preview-btn').addEventListener('click',function(){
+  var raw=document.getElementById('json-paste').value.trim();
+  var title=document.getElementById('import-title').value.trim()||'Meeting '+(new Date().toLocaleDateString());
+  var st=document.getElementById('import-status');
+  if(!raw){alert('Please paste Claude\'s reply first.');return;}
+  try{
+    var clean=raw.replace(/```json/gi,'').replace(/```/g,'').trim();
+    var start=clean.indexOf('['),end=clean.lastIndexOf(']');
+    if(start===-1||end===-1)throw new Error('No JSON array found. Make sure you copied the full reply including the [ ] brackets.');
+    var items=JSON.parse(clean.substring(start,end+1));
+    if(!Array.isArray(items)||!items.length)throw new Error('No tasks found in pasted text.');
+    pendingItems=items;pendingTitle=title;
+    showPreview(items,title);st.textContent='';
+  }catch(err){st.innerHTML='<span style="color:var(--red)">Error: '+esc(err.message)+'</span>';}
+});
+document.getElementById('cancel-import-btn').addEventListener('click',function(){document.getElementById('preview-panel').style.display='none';pendingItems=[];pendingTitle='';});
+document.getElementById('confirm-import-btn').addEventListener('click',async function(){
+  if(!requireUser())return;
+  var btn=this;btn.innerHTML='<span class="spin"></span> Saving...';btn.disabled=true;
+  await applyImport(pendingItems,pendingTitle);
+  btn.innerHTML='<i class="ti ti-check"></i> Confirm &amp; import';btn.disabled=false;
+  document.getElementById('preview-panel').style.display='none';
+  document.getElementById('json-paste').value='';
+  var st=document.getElementById('import-status');
+  st.innerHTML='<span style="color:var(--green)">✓ '+pendingItems.length+' task'+(pendingItems.length!=1?'s':'')+' imported by '+esc(currentUser)+'!</span>';
+  setTimeout(function(){st.textContent='';},4000);
+  pendingItems=[];pendingTitle='';
+});
+
+function showPreview(items,title){
+  var updates=items.filter(function(i){return i.matchedId;}),news=items.filter(function(i){return !i.matchedId;});
+  var html='<div style="font-weight:600;font-size:15px;margin-bottom:14px">Preview: '+items.length+' task'+(items.length!=1?'s':'')+' from "'+esc(title)+'"'
+    +(updates.length?' &nbsp;<span class="badge b-update">'+updates.length+' update'+(updates.length!=1?'s':'')+'</span>':'')
+    +(news.length?' &nbsp;<span class="badge b-new">'+news.length+' new</span>':'')+'</div>';
+  if(updates.length){
+    html+='<div style="font-size:11px;font-weight:600;color:var(--green);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Tasks to update</div>';
+    updates.forEach(function(item){
+      var ex=tasks.find(function(t){return t.id===item.matchedId;});if(!ex)return;
+      html+='<div class="preview-match"><div style="font-weight:500;font-size:13px;margin-bottom:3px">'+esc(item.description)+'</div>'
+        +'<div style="font-size:12px;color:var(--text2)">Currently: '+esc(ex.status)+(ex.dueDate?' · '+fmtDate(ex.dueDate):'')+'</div>';
+      if(item.changedFields&&item.changedFields.length)html+='<div style="margin-top:4px">'+item.changedFields.map(function(f){var ov=ex[f]||'—',nv=item[f]||'—';if(f=='dueDate'){ov=ov!='—'?fmtDate(ov):ov;nv=nv!='—'?fmtDate(nv):nv;}return'<span class="diff-chip">'+f+': '+esc(String(ov))+' → '+esc(String(nv))+'</span>';}).join('')+'</div>';
+      html+='</div>';
+    });
+  }
+  if(news.length){
+    html+='<div style="font-size:11px;font-weight:600;color:var(--purple);margin-bottom:8px;margin-top:'+(updates.length?'14px':'0')+';text-transform:uppercase;letter-spacing:.5px">New tasks</div>';
+    news.forEach(function(item){
+      html+='<div class="preview-new"><div style="font-weight:500;font-size:13px;margin-bottom:3px">'+esc(item.description)+'</div>'
+        +'<div style="font-size:12px;color:var(--text2)">'+(item.owner?'<i class="ti ti-user"></i> '+esc(item.owner)+' &nbsp;':'')+(item.dueDate?'<i class="ti ti-calendar"></i> '+fmtDate(item.dueDate):'')+'</div>'
+        +(item.contextNote?'<div style="font-size:12px;color:var(--text2);font-style:italic;margin-top:3px">'+esc(item.contextNote)+'</div>':'')
+        +'</div>';
+    });
+  }
+  document.getElementById('preview-content').innerHTML=html;
+  document.getElementById('preview-panel').style.display='block';
+}
+
+async function applyImport(items,title){
+  var tod=todayStr(),updCount=0,addCount=0;
+  items.forEach(function(item){
+    if(item.matchedId){
+      var t=tasks.find(function(t){return t.id===item.matchedId;});
+      if(t){(item.changedFields||[]).forEach(function(f){if(item[f]!==undefined&&!['contextNote','matchedId','changedFields'].includes(f))t[f]=item[f];});t.lastUpdated=tod;t.lastEditedBy=currentUser;if(item.contextNote){if(!tnotes[t.id])tnotes[t.id]=[];tnotes[t.id].push({id:uid(),text:'[Update from "'+title+'" by '+currentUser+']: '+item.contextNote,date:tod,auto:true,by:currentUser});}updCount++;}
+    } else {
+      var id=uid();
+      tasks.push({id:id,description:item.description||'',owner:item.owner||'',dueDate:item.dueDate||'',status:item.status||'To Do',source:title,added:tod,addedBy:currentUser});
+      if(item.contextNote){tnotes[id]=[{id:uid(),text:'[From "'+title+'" by '+currentUser+']: '+item.contextNote,date:tod,auto:true,by:currentUser}];}
+      addCount++;
+    }
+  });
+  meetings.push({id:uid(),title:title,date:tod,updated:updCount||null,added:addCount||null,by:currentUser});
+  checkOverdue();
+  await Promise.all([saveTasks(),saveMeetings(),saveNotes()]);
+  renderAll();goTab('tasks');
+}
+
+// ── Task CRUD ────────────────────────────────────────────────
+document.getElementById('add-task-btn').addEventListener('click',function(){
+  document.getElementById('add-task-form').style.display='block';
+  if(currentUser)document.getElementById('nt-owner').value=currentUser;
+  document.getElementById('nt-desc').focus();
+});
+document.getElementById('cancel-add-btn').addEventListener('click',function(){document.getElementById('add-task-form').style.display='none';});
+document.getElementById('save-new-task-btn').addEventListener('click',async function(){
+  if(!requireUser())return;
+  var desc=document.getElementById('nt-desc').value.trim();if(!desc){alert('Please enter a description.');return;}
+  var btn=this;btn.innerHTML='<span class="spin"></span> Saving...';btn.disabled=true;
+  var id=uid(),note=document.getElementById('nt-notes').value.trim();
+  tasks.push({id:id,description:desc,owner:document.getElementById('nt-owner').value.trim(),dueDate:document.getElementById('nt-due').value,status:document.getElementById('nt-status').value,source:document.getElementById('nt-source').value.trim(),addedBy:currentUser,added:todayStr()});
+  if(note){tnotes[id]=[{id:uid(),text:note,date:todayStr(),auto:false,by:currentUser}];await saveNotes();}
+  checkOverdue();await saveTasks();renderTasks();renderDashboard();
+  btn.innerHTML='<i class="ti ti-check"></i> Save task';btn.disabled=false;
+  document.getElementById('add-task-form').style.display='none';
+  ['nt-desc','nt-owner','nt-due','nt-source','nt-notes'].forEach(function(x){document.getElementById(x).value='';});
+  document.getElementById('nt-status').value='To Do';
+});
+
+async function delTask(id){
+  if(!requireUser())return;
+  if(!confirm('Delete this task? This affects all team members.'))return;
+  tasks=tasks.filter(function(t){return t.id!==id;});delete attachments[id];delete tnotes[id];
+  await Promise.all([saveTasks(),saveAttach(),saveNotes()]);renderTasks();renderDashboard();
+}
+async function delMeeting(id){
+  if(!requireUser())return;
+  if(!confirm('Delete this meeting record?'))return;
+  meetings=meetings.filter(function(m){return m.id!==id;});await saveMeetings();renderMeetings();
+}
+
+function editTask(id){
+  if(!requireUser())return;
+  var t=tasks.find(function(t){return t.id===id;});if(!t)return;
+  var row=document.getElementById('trow-'+id);
+  row.innerHTML='<label class="lbl" style="margin-top:0">Description</label><input id="e-desc" value="'+esc(t.description)+'" style="width:100%">'
+    +'<div class="g2"><div><label class="lbl">Owner</label><input id="e-owner" value="'+esc(t.owner||'')+'"></div><div><label class="lbl">Due date</label><input type="date" id="e-due" value="'+esc(t.dueDate||'')+'"></div></div>'
+    +'<div class="g2"><div><label class="lbl">Status</label><select id="e-status"><option'+(t.status=='To Do'?' selected':'')+'>To Do</option><option'+(t.status=='In Progress'?' selected':'')+'>In Progress</option><option'+(t.status=='Done'?' selected':'')+'>Done</option></select></div><div><label class="lbl">Source</label><input id="e-source" value="'+esc(t.source||'')+'"></div></div>'
+    +'<label class="lbl">Add a note</label><textarea id="e-note" rows="2" placeholder="Add a note or update..."></textarea>'
+    +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">'
+    +'<button class="btn" id="ec-'+id+'">Cancel</button>'
+    +'<button class="btn btn-sm" id="en-'+id+'" style="margin-right:auto"><i class="ti ti-notes"></i> All notes</button>'
+    +'<button class="btn btn-primary" id="es-'+id+'"><i class="ti ti-check"></i> Save</button></div>';
+  document.getElementById('ec-'+id).onclick=function(){renderTasks();};
+  document.getElementById('en-'+id).onclick=function(){openNotesModal(id);};
+  document.getElementById('es-'+id).onclick=function(){saveEdit(id);};
+}
+async function saveEdit(id){
+  var t=tasks.find(function(t){return t.id===id;});if(!t)return;
+  t.description=document.getElementById('e-desc').value.trim();
+  t.owner=document.getElementById('e-owner').value.trim();
+  t.dueDate=document.getElementById('e-due').value;
+  t.status=document.getElementById('e-status').value;
+  t.source=document.getElementById('e-source').value.trim();
+  t.lastEditedBy=currentUser;t.lastUpdated=todayStr();
+  var note=document.getElementById('e-note').value.trim();
+  if(note){if(!tnotes[id])tnotes[id]=[];tnotes[id].push({id:uid(),text:note,date:todayStr(),auto:false,by:currentUser});await saveNotes();}
+  checkOverdue();await saveTasks();renderTasks();renderDashboard();
+}
+
+// ── Notes modal ──────────────────────────────────────────────
+function openNotesModal(tid){
+  var t=tasks.find(function(t){return t.id===tid;});if(!t)return;
+  var notes=tnotes[tid]||[];
+  showModal('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'
+    +'<div style="font-weight:600;font-size:15px">Notes</div><button class="btn btn-icon btn-sm" id="mc"><i class="ti ti-x"></i></button></div>'
+    +'<div style="font-size:13px;color:var(--text2);margin-bottom:12px;font-style:italic">'+esc(t.description.substring(0,70))+(t.description.length>70?'…':'')+'</div>'
+    +'<div style="max-height:240px;overflow-y:auto;margin-bottom:14px">'
+    +(notes.length?notes.map(function(n){return'<div class="note-entry"><div class="note-meta">'+n.date+(n.by?' · <strong>'+esc(n.by)+'</strong>':'')+' · '+(n.auto?'<span style="color:var(--green)">auto-extracted</span>':'manual')+'</div><div style="font-size:13px;line-height:1.5">'+esc(n.text)+'</div><button class="btn btn-sm" style="margin-top:5px;font-size:11px" data-ndel="'+n.id+'" data-ntid="'+tid+'"><i class="ti ti-trash"></i> Remove</button></div>';}).join('')
+    :'<div style="color:var(--text2);font-size:13px;padding:10px 0">No notes yet.</div>')
+    +'</div><label class="lbl" style="margin-top:0">Add a note</label>'
+    +'<textarea id="mn-text" rows="3" placeholder="Type a note or update..." style="margin-bottom:12px"></textarea>'
+    +'<div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn" id="mc2">Close</button><button class="btn btn-primary" id="mn-add"><i class="ti ti-plus"></i> Add note</button></div>');
+  document.getElementById('mc').onclick=closeModal;document.getElementById('mc2').onclick=closeModal;
+  document.getElementById('mn-add').onclick=function(){addNote(tid);};
+  document.querySelectorAll('[data-ndel]').forEach(function(b){b.onclick=function(){delNote(b.dataset.ntid,b.dataset.ndel);};});
+}
+async function addNote(tid){
+  if(!requireUser())return;
+  var text=document.getElementById('mn-text').value.trim();if(!text)return;
+  if(!tnotes[tid])tnotes[tid]=[];
+  tnotes[tid].push({id:uid(),text:text,date:todayStr(),auto:false,by:currentUser});
+  await saveNotes();renderTasks();renderDashboard();openNotesModal(tid);
+}
+async function delNote(tid,nid){
+  if(!tnotes[tid])return;tnotes[tid]=tnotes[tid].filter(function(n){return n.id!==nid;});
+  await saveNotes();renderTasks();openNotesModal(tid);
+}
+
+// ── Attachments modal ────────────────────────────────────────
+function openAttachModal(tid){
+  var t=tasks.find(function(t){return t.id===tid;});if(!t)return;
+  var atts=attachments[tid]||[];
+  showModal('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'
+    +'<div style="font-weight:600;font-size:15px">Attachments</div><button class="btn btn-icon btn-sm" id="amc"><i class="ti ti-x"></i></button></div>'
+    +'<div style="font-size:13px;color:var(--text2);font-style:italic;margin-bottom:12px">'+esc(t.description.substring(0,70))+(t.description.length>70?'…':'')+'</div>'
+    +(atts.length?atts.map(function(a){return'<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px"><i class="ti ti-'+fileIcon(a.name)+'" style="font-size:20px;color:var(--text2)"></i><div style="flex:1;min-width:0"><div style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(a.name)+'</div><div style="font-size:11px;color:var(--text2)">'+a.size+' · '+a.date+(a.by?' · '+esc(a.by):'')+'</div></div><button class="btn btn-icon btn-sm" data-aprev-tid="'+tid+'" data-aprev-aid="'+a.id+'" title="Preview"><i class="ti ti-eye"></i></button><button class="btn btn-icon btn-sm" data-arm-tid="'+tid+'" data-arm-aid="'+a.id+'" title="Remove"><i class="ti ti-trash"></i></button></div>';}).join('')
+    :'<div style="color:var(--text2);font-size:13px;padding:12px 0;text-align:center">No attachments yet.</div>')
+    +'<div class="attach-zone" id="amdrop"><i class="ti ti-paperclip" style="font-size:22px;display:block;margin-bottom:4px"></i>Click to attach a file <span style="font-size:11px;color:var(--text3)">(max 1 MB)</span></div>'
+    +'<input type="file" id="amf" style="display:none">');
+  document.getElementById('amc').onclick=closeModal;
+  document.getElementById('amdrop').onclick=function(){document.getElementById('amf').click();};
+  document.getElementById('amf').onchange=function(e){attachFile(tid,e);};
+  document.querySelectorAll('[data-aprev-tid]').forEach(function(b){b.onclick=function(){previewAttach(b.dataset.aprevTid,b.dataset.aprevAid);};});
+  document.querySelectorAll('[data-arm-tid]').forEach(function(b){b.onclick=async function(){await rmAttach(b.dataset.armTid,b.dataset.armAid);openAttachModal(tid);};});
+}
+async function attachFile(tid,e){
+  var f=e.target.files[0];if(!f)return;
+  if(f.size>1024*1024){alert('File is over 1 MB. Please attach a smaller file.');e.target.value='';return;}
+  var r=new FileReader();
+  r.onload=async function(ev){
+    if(!attachments[tid])attachments[tid]=[];
+    attachments[tid].push({id:uid(),name:f.name,data:ev.target.result,type:f.type,size:Math.round(f.size/1024)+'KB',date:todayStr(),by:currentUser});
+    await saveAttach();openAttachModal(tid);renderTasks();
+  };
+  r.readAsDataURL(f);e.target.value='';
+}
+function previewAttach(tid,aid){
+  var att=(attachments[tid]||[]).find(function(a){return a.id===aid;});if(!att)return;
+  var c='';
+  if(att.type&&att.type.startsWith('image/'))c='<img src="'+att.data+'" style="max-width:100%;border-radius:8px">';
+  else if(att.name.match(/\.(txt|md|csv)$/i)||(att.type&&att.type.includes('text'))){try{c='<pre style="white-space:pre-wrap;font-size:12px;font-family:var(--mono);background:var(--surface2);padding:14px;border-radius:8px;max-height:360px;overflow-y:auto">'+esc(atob(att.data.split(',')[1]))+'</pre>';}catch(e){c='<p style="color:var(--text2)">Preview unavailable.</p>';}}
+  else{c='<div style="text-align:center;padding:36px;color:var(--text2)"><i class="ti ti-file" style="font-size:40px;display:block;margin-bottom:12px"></i><div style="margin-bottom:16px">Preview not available for this file type.</div><button class="btn btn-primary" id="att-dl"><i class="ti ti-download"></i> Download file</button></div>';}
+  showModal('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:460px">'+esc(att.name)+'</div><div style="display:flex;gap:6px;flex-shrink:0"><button class="btn btn-icon btn-sm" id="pbk"><i class="ti ti-arrow-left"></i></button><button class="btn btn-icon btn-sm" id="pcl"><i class="ti ti-x"></i></button></div></div>'+c);
+  document.getElementById('pcl').onclick=closeModal;
+  document.getElementById('pbk').onclick=function(){openAttachModal(tid);};
+  var dlb=document.getElementById('att-dl');if(dlb)dlb.onclick=function(){var a=document.createElement('a');a.href=att.data;a.download=att.name;a.click();};
+}
+async function rmAttach(tid,aid){
+  if(!attachments[tid])return;attachments[tid]=attachments[tid].filter(function(a){return a.id!==aid;});
+  await saveAttach();renderTasks();
+}
+
+// ── Team ─────────────────────────────────────────────────────
+document.getElementById('add-member-btn').addEventListener('click',async function(){
+  var name=document.getElementById('nm-name').value.trim(),email=document.getElementById('nm-email').value.trim();
+  if(!name||!email){alert('Please enter both name and email.');return;}
+  team.push({id:uid(),name:name,email:email});await saveTeam();renderTeam();
+  document.getElementById('nm-name').value='';document.getElementById('nm-email').value='';
+});
+async function delMember(id){team=team.filter(function(m){return m.id!==id;});await saveTeam();renderTeam();}
+
+// ── Export ───────────────────────────────────────────────────
+document.getElementById('gen-csv-btn').addEventListener('click',function(){
+  if(!tasks.length){alert('No tasks to export yet.');return;}
+  var rows=[['#','Description','Owner','Due Date','Status','Source Meeting','Notes','Last Edited By']];
+  tasks.forEach(function(t,i){
+    var n=(tnotes[t.id]||[]).map(function(x){return x.date+(x.by?' ('+x.by+')':'')+': '+x.text;}).join(' | ');
+    rows.push([i+1,t.description,t.owner||'',t.dueDate?fmtDate(t.dueDate):'',t.status,t.source||'',n,t.lastEditedBy||t.addedBy||'']);
+  });
+  var csv=rows.map(function(r){return r.map(function(c){return'"'+String(c||'').replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  document.getElementById('csv-text').value=csv;
+  document.getElementById('csv-output').style.display='block';
+});
+document.getElementById('copy-csv-btn').addEventListener('click',function(){
+  var ta=document.getElementById('csv-text');ta.select();
+  try{document.execCommand('copy');document.getElementById('copy-csv-status').textContent='✓ Copied! Paste into Excel or Google Sheets';setTimeout(function(){document.getElementById('copy-csv-status').textContent='';},4000);}
+  catch(e){document.getElementById('copy-csv-status').textContent='Select all and copy manually (Ctrl+A, Ctrl+C)';}
+});
+document.getElementById('send-export-btn').addEventListener('click',function(){
+  if(!tasks.length){alert('No tasks to export yet.');return;}
+  var rows=tasks.map(function(t,i){var n=(tnotes[t.id]||[]).map(function(x){return x.date+': '+x.text;}).join(' | ');return(i+1)+'. '+t.description+' | Owner: '+(t.owner||'—')+' | Due: '+(t.dueDate?fmtDate(t.dueDate):'—')+' | Status: '+t.status+(n?' | Notes: '+n:'');}).join('\n');
+  var prompt='Please create a downloadable Word (.docx) and Excel (.xlsx) file from this project plan data:\n\nProject Plan — Generated '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'\nTotal tasks: '+tasks.length+' | Open: '+tasks.filter(function(t){return t.status!='Done';}).length+' | Completed: '+tasks.filter(function(t){return t.status=='Done';}).length+'\n\n'+rows;
+  var ta=document.createElement('textarea');ta.value=prompt;ta.style.position='fixed';ta.style.top='-9999px';document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);
+  var msg=document.getElementById('export-copy-msg');msg.style.display='block';setTimeout(function(){msg.style.display='none';},5000);
+});
+
+// ── Modal ────────────────────────────────────────────────────
+function showModal(html){document.getElementById('modal-root').innerHTML='<div class="modal-back" onclick="if(event.target===this)closeModal()"><div class="modal-box">'+html+'</div></div>';}
+function closeModal(){document.getElementById('modal-root').innerHTML='';}
+
+// ── Boot ─────────────────────────────────────────────────────
+document.getElementById('sec-dashboard').style.display='block';
+loadAll();
+
+})();
+</script>
+</body>
+</html>
