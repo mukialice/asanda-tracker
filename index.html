@@ -492,14 +492,18 @@ function renderTeam(){
 
 // ── Event delegation ─────────────────────────────────────────
 document.body.addEventListener('click',function(e){
-  var el=e.target.closest('button,.attach-pill');if(!el)return;
-  if(el.classList.contains('task-notes-btn')){openNotesModal(el.dataset.id);return;}
-  if(el.classList.contains('task-attach-btn')){openAttachModal(el.dataset.id);return;}
-  if(el.classList.contains('task-edit-btn')){editTask(el.dataset.id);return;}
-  if(el.classList.contains('task-del-btn')){delTask(el.dataset.id);return;}
-  if(el.classList.contains('meet-del-btn')){delMeeting(el.dataset.id);return;}
-  if(el.classList.contains('member-del-btn')){delMember(el.dataset.id);return;}
-  if(el.classList.contains('attach-pill')){previewAttach(el.dataset.tid,el.dataset.aid);return;}
+  // Walk up from click target to find the actionable element
+  var el=e.target;
+  while(el&&el!==document.body){
+    if(el.classList&&el.classList.contains('task-notes-btn')){openNotesModal(el.dataset.id);return;}
+    if(el.classList&&el.classList.contains('task-attach-btn')){openAttachModal(el.dataset.id);return;}
+    if(el.classList&&el.classList.contains('task-edit-btn')){editTask(el.dataset.id);return;}
+    if(el.classList&&el.classList.contains('task-del-btn')){delTask(el.dataset.id);return;}
+    if(el.classList&&el.classList.contains('meet-del-btn')){delMeeting(el.dataset.id);return;}
+    if(el.classList&&el.classList.contains('member-del-btn')){delMember(el.dataset.id);return;}
+    if(el.classList&&el.classList.contains('attach-pill')){previewAttach(el.dataset.tid,el.dataset.aid);return;}
+    el=el.parentElement;
+  }
 });
 document.getElementById('filter-status').addEventListener('change',renderTasks);
 document.getElementById('filter-owner').addEventListener('change',renderTasks);
@@ -640,29 +644,31 @@ document.getElementById('save-new-task-btn').addEventListener('click',async func
 });
 
 async function delTask(id){
-  if(!requireUser())return;
   if(!confirm('Delete this task? This affects all team members.'))return;
   tasks=tasks.filter(function(t){return t.id!==id;});delete attachments[id];delete tnotes[id];
   await Promise.all([saveTasks(),saveAttach(),saveNotes()]);renderTasks();renderDashboard();
 }
 async function delMeeting(id){
-  if(!requireUser())return;
   if(!confirm('Delete this meeting record?'))return;
   meetings=meetings.filter(function(m){return m.id!==id;});await saveMeetings();renderMeetings();
 }
 
 function editTask(id){
-  if(!requireUser())return;
+  // No requireUser check here — allow anyone to open the edit form
+  // User is only required at save time
   var t=tasks.find(function(t){return t.id===id;});if(!t)return;
   var row=document.getElementById('trow-'+id);
+  if(!row)return;
   row.innerHTML='<label class="lbl" style="margin-top:0">Description</label><input id="e-desc" value="'+esc(t.description)+'" style="width:100%">'
     +'<div class="g2"><div><label class="lbl">Owner</label><input id="e-owner" value="'+esc(t.owner||'')+'"></div><div><label class="lbl">Due date</label><input type="date" id="e-due" value="'+esc(t.dueDate||'')+'"></div></div>'
     +'<div class="g2"><div><label class="lbl">Status</label><select id="e-status"><option'+(t.status=='To Do'?' selected':'')+'>To Do</option><option'+(t.status=='In Progress'?' selected':'')+'>In Progress</option><option'+(t.status=='Done'?' selected':'')+'>Done</option></select></div><div><label class="lbl">Source</label><input id="e-source" value="'+esc(t.source||'')+'"></div></div>'
     +'<label class="lbl">Add a note</label><textarea id="e-note" rows="2" placeholder="Add a note or update..."></textarea>'
+    +(currentUser?'':'<div style="font-size:12px;color:var(--amber);margin-top:8px;padding:8px 10px;background:var(--amber-light);border-radius:6px"><i class="ti ti-alert-triangle"></i> Select your name in the sidebar before saving</div>')
     +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">'
     +'<button class="btn" id="ec-'+id+'">Cancel</button>'
     +'<button class="btn btn-sm" id="en-'+id+'" style="margin-right:auto"><i class="ti ti-notes"></i> All notes</button>'
     +'<button class="btn btn-primary" id="es-'+id+'"><i class="ti ti-check"></i> Save</button></div>';
+  document.getElementById('e-desc').focus();
   document.getElementById('ec-'+id).onclick=function(){renderTasks();};
   document.getElementById('en-'+id).onclick=function(){openNotesModal(id);};
   document.getElementById('es-'+id).onclick=function(){saveEdit(id);};
