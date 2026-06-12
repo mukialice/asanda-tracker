@@ -444,14 +444,14 @@ function tCard(t,compact){
     +(nts.length?'<span><i class="ti ti-notes"></i>'+nts.length+' note'+(nts.length!=1?'s':'')+'</span>':'')
     +editedBy+'</div>'
     +attHtml+noteSnip+'</div>'
-    +'<div class="task-actions">'
+    +'<div class="task-actions" style="position:relative;z-index:2;flex-shrink:0">'
     +'<span class="badge '+bc+'">'+t.status+'</span>'
     +(compact?'':
       ' <button class="btn btn-icon btn-sm" onclick="openNotesModal(\'' +t.id+ '\')" title="Notes"><i class="ti ti-notes"></i></button>'
       +'<button class="btn btn-icon btn-sm" onclick="openAttachModal(\'' +t.id+ '\')" title="Attachments"><i class="ti ti-paperclip"></i></button>'
       +'<button class="btn btn-icon btn-sm" onclick="editTask(\'' +t.id+ '\')" title="Edit"><i class="ti ti-edit"></i></button>'
       +'<button class="btn btn-icon btn-sm" onclick="delTask(\'' +t.id+ '\')" title="Delete"><i class="ti ti-trash"></i></button>')
-    +'</div></div>'+alrt+'</div>';
+    +'</div>'+(alrt?'<div style="margin-top:6px">'+alrt+'</div>':'')+'</div></div>';
 }
 
 function emailBtn(t){
