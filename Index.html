@@ -447,10 +447,10 @@ function tCard(t,compact){
     +'<div class="task-actions">'
     +'<span class="badge '+bc+'">'+t.status+'</span>'
     +(compact?'':
-      ' <button class="btn btn-icon btn-sm task-notes-btn" data-id="'+t.id+'" title="Notes"><i class="ti ti-notes"></i></button>'
-      +'<button class="btn btn-icon btn-sm task-attach-btn" data-id="'+t.id+'" title="Attachments"><i class="ti ti-paperclip"></i></button>'
-      +'<button class="btn btn-icon btn-sm task-edit-btn" data-id="'+t.id+'" title="Edit"><i class="ti ti-edit"></i></button>'
-      +'<button class="btn btn-icon btn-sm task-del-btn" data-id="'+t.id+'" title="Delete"><i class="ti ti-trash"></i></button>')
+      ' <button class="btn btn-icon btn-sm" onclick="openNotesModal(\'' +t.id+ '\')" title="Notes"><i class="ti ti-notes"></i></button>'
+      +'<button class="btn btn-icon btn-sm" onclick="openAttachModal(\'' +t.id+ '\')" title="Attachments"><i class="ti ti-paperclip"></i></button>'
+      +'<button class="btn btn-icon btn-sm" onclick="editTask(\'' +t.id+ '\')" title="Edit"><i class="ti ti-edit"></i></button>'
+      +'<button class="btn btn-icon btn-sm" onclick="delTask(\'' +t.id+ '\')" title="Delete"><i class="ti ti-trash"></i></button>')
     +'</div></div>'+alrt+'</div>';
 }
 
@@ -775,9 +775,9 @@ function editTask(id){
         +'<textarea id="e-note" rows="2" placeholder="Add a note or update..."></textarea>'
         +(currentUser?'':'<div style="font-size:12px;color:var(--amber);margin-top:8px;padding:8px 10px;background:var(--amber-light);border-radius:6px"><i class="ti ti-alert-triangle"></i> Select your name in the sidebar before saving</div>')
         +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">'
-        +'<button class="btn" id="ec-'+id+'">Cancel</button>'
-        +'<button class="btn btn-sm" id="en-'+id+'" style="margin-right:auto"><i class="ti ti-notes"></i> All notes</button>'
-        +'<button class="btn btn-primary" id="es-'+id+'"><i class="ti ti-check"></i> Save</button>'
+        +'<button class="btn" onclick="renderTasks()">Cancel</button>'
+        +'<button class="btn btn-sm" onclick="openNotesModal(\'' +id+ '\')" style="margin-right:auto"><i class="ti ti-notes"></i> All notes</button>'
+        +'<button class="btn btn-primary" onclick="saveEdit(\'' +id+ '\')" id="es-'+id+'"><i class="ti ti-check"></i> Save</button>'
         +'</div></div>';
     } else {
       html+=tCard(task,false);
@@ -786,13 +786,7 @@ function editTask(id){
   document.getElementById('tasks-list').innerHTML=html||'<div class="empty"><i class="ti ti-check"></i><div>No tasks found</div></div>';
 
   // Wire up buttons and focus
-  var cb=document.getElementById('ec-'+id);
-  var nb=document.getElementById('en-'+id);
-  var sb=document.getElementById('es-'+id);
   var di=document.getElementById('e-desc');
-  if(cb)cb.onclick=function(){renderTasks();};
-  if(nb)nb.onclick=function(){openNotesModal(id);};
-  if(sb)sb.onclick=function(){saveEdit(id);};
   if(di){di.focus();di.setSelectionRange(di.value.length,di.value.length);}
 
   // Scroll edit form into view
@@ -927,6 +921,15 @@ function closeModal(){document.getElementById('modal-root').innerHTML='';}
 // Expose globally so inline onclick in dynamic HTML can reach these
 window.closeModal=closeModal;
 window.showModal=showModal;
+window.editTask=editTask;
+window.openNotesModal=openNotesModal;
+window.openAttachModal=openAttachModal;
+window.delTask=delTask;
+window.delMeeting=delMeeting;
+window.delMember=delMember;
+window.previewAttach=previewAttach;
+window.saveEdit=saveEdit;
+window.renderTasks=renderTasks;
 
 // ── Boot ─────────────────────────────────────────────────────
 document.getElementById('sec-dashboard').style.display='block';
