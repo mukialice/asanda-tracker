@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+
 <style>
 :root{
   --green:#2D6A4F;--green-light:#E8F5EE;--green-mid:#52B788;--green-dark:#1B4332;
@@ -41,6 +41,7 @@ body{font-family:var(--font);font-size:15px;color:var(--text);background:var(--b
 .topbar-title{font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.2px}
 .content{flex:1;padding:28px;max-width:1000px;width:100%}
 button,input,select,textarea{font-family:var(--font)}
+button svg,button i{pointer-events:none}
 .btn{border:1px solid var(--border);border-radius:8px;padding:8px 16px;font-size:13.5px;background:var(--surface);color:var(--text);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px;font-weight:400}
 .btn:hover{background:var(--surface2);border-color:var(--border-dark)}
 .btn:active{transform:scale(.98)}
@@ -118,16 +119,16 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
 <div class="app">
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <div class="name"><i class="ti ti-plant-2"></i> ASANDA</div>
+    <div class="name"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-4px"><path d="M2 22c0-4 2-8 6-10s8-1 11 2"/><path d="M6.3 14.7C4 17 3 20 2 22c2-1 5-2 7.3-4.3"/><path d="M12 12c4-4 10-4 10-4s0 6-4 10"/></svg> ASANDA</div>
     <div class="sub">Project Tracker</div>
   </div>
   <nav class="sidebar-nav">
-    <button class="nav-item active" data-tab="dashboard"><i class="ti ti-chart-bar"></i> Dashboard</button>
-    <button class="nav-item" data-tab="upload"><i class="ti ti-upload"></i> Upload Notes</button>
-    <button class="nav-item" data-tab="tasks"><i class="ti ti-checklist"></i> Tasks</button>
-    <button class="nav-item" data-tab="meetings"><i class="ti ti-file-description"></i> Meetings</button>
-    <button class="nav-item" data-tab="team"><i class="ti ti-users"></i> Team</button>
-    <button class="nav-item" data-tab="export"><i class="ti ti-download"></i> Export</button>
+    <button class="nav-item active" data-tab="dashboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg> Dashboard</button>
+    <button class="nav-item" data-tab="upload"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload Notes</button>
+    <button class="nav-item" data-tab="tasks"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><path d="M9 12l2 2 4-4"/></svg> Tasks</button>
+    <button class="nav-item" data-tab="meetings"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Meetings</button>
+    <button class="nav-item" data-tab="team"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Team</button>
+    <button class="nav-item" data-tab="export"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
   </nav>
   <div class="sidebar-user">
     <div style="font-size:11px;color:rgba(255,255,255,.45);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.5px">Signed in as</div>
@@ -143,8 +144,8 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
     <div class="topbar-title" id="topbar-title">Dashboard</div>
     <div style="display:flex;align-items:center;gap:12px">
       <div class="sync-indicator"><div class="sync-dot" id="sync-dot"></div><span id="sync-label">Connected</span></div>
-      <div id="save-error" style="display:none" class="banner banner-red" style="margin:0;padding:6px 12px;font-size:12px"><i class="ti ti-alert-circle"></i> Save failed</div>
-      <button class="btn btn-sm" id="refresh-btn"><i class="ti ti-refresh"></i> Refresh</button>
+      <div id="save-error" style="display:none" class="banner banner-red" style="margin:0;padding:6px 12px;font-size:12px"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Save failed</div>
+      <button class="btn btn-sm" id="refresh-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Refresh</button>
     </div>
   </div>
 
@@ -158,7 +159,7 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
         <div class="stat"><div class="stat-num" id="stat-open">—</div><div class="stat-lbl">Open</div></div>
         <div class="stat"><div class="stat-num" id="stat-done">—</div><div class="stat-lbl">Completed</div></div>
       </div>
-      <div id="dash-tasks"><div class="empty"><i class="ti ti-loader" style="animation:sp 1s linear infinite"></i><div>Loading...</div></div></div>
+      <div id="dash-tasks"><div class="empty"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-6px;animation:spin 1s linear infinite"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg><div>Loading...</div></div></div>
     </div>
 
     <!-- UPLOAD -->
@@ -171,15 +172,15 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
       </div>
       <div class="card">
         <div class="card-title">Step 1 — meeting notes</div>
-        <div class="upload-zone" id="drop-zone"><i class="ti ti-upload" style="font-size:26px;display:block;margin-bottom:6px"></i><strong>Click to upload a .txt file</strong><div style="font-size:12px;margin-top:4px">Or paste your notes below</div></div>
+        <div class="upload-zone" id="drop-zone"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><strong>Click to upload a .txt file</strong><div style="font-size:12px;margin-top:4px">Or paste your notes below</div></div>
         <input type="file" id="file-input" accept=".txt,.text" style="display:none">
         <label class="lbl" style="margin-top:14px">Meeting title</label>
         <input type="text" id="meeting-title" placeholder="e.g. ASANDA — June 2026">
         <label class="lbl">Notes or transcript</label>
         <textarea id="notes-input" rows="8" placeholder="Paste meeting notes or raw speaker transcript here..."></textarea>
         <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
-          <button class="btn" id="clear-btn"><i class="ti ti-x"></i> Clear</button>
-          <button class="btn btn-primary" id="send-btn"><i class="ti ti-send"></i> Send to Claude ↗</button>
+          <button class="btn" id="clear-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Clear</button>
+          <button class="btn btn-primary" id="send-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send to Claude ↗</button>
         </div>
       </div>
       <div class="card">
@@ -190,16 +191,16 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
         <label class="lbl">Paste Claude's reply here</label>
         <textarea id="json-paste" rows="5" placeholder="Paste the full reply from Claude here..."></textarea>
         <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
-          <button class="btn" id="clear-paste-btn"><i class="ti ti-x"></i> Clear</button>
-          <button class="btn btn-primary" id="preview-btn"><i class="ti ti-eye"></i> Preview tasks</button>
+          <button class="btn" id="clear-paste-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Clear</button>
+          <button class="btn btn-primary" id="preview-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Preview tasks</button>
         </div>
         <div id="import-status" style="margin-top:10px;font-size:13px;text-align:center"></div>
       </div>
       <div id="preview-panel" style="display:none" class="card">
         <div id="preview-content"></div>
         <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
-          <button class="btn" id="cancel-import-btn"><i class="ti ti-x"></i> Cancel</button>
-          <button class="btn btn-primary" id="confirm-import-btn"><i class="ti ti-check"></i> Confirm &amp; import</button>
+          <button class="btn" id="cancel-import-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancel</button>
+          <button class="btn btn-primary" id="confirm-import-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> Confirm &amp; import</button>
         </div>
       </div>
     </div>
@@ -215,9 +216,9 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
             <option value="Done">Done</option><option value="Overdue">Overdue</option>
           </select>
           <select id="filter-owner" style="width:auto;font-size:13px;padding:7px 10px"><option value="">All owners</option></select>
-          <button class="btn btn-sm" id="my-tasks-btn"><i class="ti ti-user"></i> My tasks</button>
+          <button class="btn btn-sm" id="my-tasks-btn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> My tasks</button>
           <button class="btn btn-sm" id="clear-filter-btn">All</button>
-          <button class="btn btn-primary btn-sm" id="add-task-btn"><i class="ti ti-plus"></i> Add task</button>
+          <button class="btn btn-primary btn-sm" id="add-task-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add task</button>
         </div>
       </div>
       <div id="tasks-list"></div>
@@ -237,7 +238,7 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
         <textarea id="nt-notes" rows="2" placeholder="Optional context..."></textarea>
         <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
           <button class="btn" id="cancel-add-btn">Cancel</button>
-          <button class="btn btn-primary" id="save-new-task-btn"><i class="ti ti-check"></i> Save task</button>
+          <button class="btn btn-primary" id="save-new-task-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> Save task</button>
         </div>
       </div>
     </div>
@@ -257,7 +258,7 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
         <div style="display:flex;gap:8px;margin-top:12px">
           <input type="text" id="nm-name" placeholder="Full name" style="flex:1">
           <input type="email" id="nm-email" placeholder="email@example.com" style="flex:2">
-          <button class="btn btn-primary" id="add-member-btn"><i class="ti ti-plus"></i> Add</button>
+          <button class="btn btn-primary" id="add-member-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add</button>
         </div>
       </div>
     </div>
@@ -267,14 +268,14 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
       <div class="section-hdr"><h2>Export</h2></div>
       <div class="export-panel">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
-          <i class="ti ti-table" style="font-size:26px;color:var(--green)"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-5px"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/><line x1="15" y1="9" x2="15" y2="21"/></svg>
           <div style="flex:1"><div style="font-weight:600;font-size:14px">CSV — Excel &amp; Google Sheets</div><div style="font-size:12px;color:var(--text2)">Generate CSV, copy all, paste into cell A1 of a blank spreadsheet</div></div>
-          <button class="btn btn-primary btn-sm" id="gen-csv-btn"><i class="ti ti-refresh"></i> Generate</button>
+          <button class="btn btn-primary btn-sm" id="gen-csv-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Generate</button>
         </div>
         <div id="csv-output" style="display:none">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
             <span style="font-size:12px;color:var(--text2)">Select all → Ctrl+A then Ctrl+C</span>
-            <button class="btn btn-sm" id="copy-csv-btn"><i class="ti ti-copy"></i> Copy all</button>
+            <button class="btn btn-sm" id="copy-csv-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy all</button>
           </div>
           <textarea id="csv-text" rows="8" style="font-family:var(--mono);font-size:11px;background:var(--surface2)" readonly></textarea>
           <div id="copy-csv-status" style="font-size:12px;margin-top:4px;text-align:right;color:var(--green)"></div>
@@ -282,9 +283,9 @@ label.lbl{font-size:12px;color:var(--text2);display:block;margin-bottom:5px;marg
       </div>
       <div class="export-panel">
         <div style="display:flex;align-items:center;gap:12px">
-          <i class="ti ti-file-word" style="font-size:26px;color:var(--blue)"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-5px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           <div style="flex:1"><div style="font-weight:600;font-size:14px">Word or Excel file via Claude</div><div style="font-size:12px;color:var(--text2)">Open Claude in a new tab, paste the prompt, and Claude will generate a downloadable file</div></div>
-          <button class="btn btn-primary btn-sm" id="send-export-btn"><i class="ti ti-copy"></i> Copy prompt</button>
+          <button class="btn btn-primary btn-sm" id="send-export-btn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy prompt</button>
         </div>
         <div id="export-copy-msg" style="font-size:12px;color:var(--green);margin-top:8px;display:none">✓ Copied! Paste into Claude to generate your Word/Excel file.</div>
       </div>
@@ -381,7 +382,7 @@ function renderAll(){renderDashboard();renderTasks();renderMeetings();renderTeam
 document.getElementById('current-user').addEventListener('change',function(){currentUser=this.value;});
 document.getElementById('refresh-btn').addEventListener('click',function(){
   var btn=this;btn.innerHTML='<span class="spin spin-dark"></span> Loading...';btn.disabled=true;
-  loadAll().then(function(){btn.innerHTML='<i class="ti ti-refresh"></i> Refresh';btn.disabled=false;});
+  loadAll().then(function(){btn.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Refresh';btn.disabled=false;});
 });
 
 // ── Tabs ─────────────────────────────────────────────────────
@@ -412,45 +413,45 @@ function renderDashboard(){
   document.getElementById('stat-open').textContent=tasks.filter(function(t){return t.status!='Done';}).length;
   var urg=tasks.filter(function(t){if(t.status=='Done')return false;var d=daysUntil(t.dueDate);return d!==null&&d>=0&&d<=7;});
   document.getElementById('notif-area').innerHTML=urg.length
-    ?'<div class="banner banner-blue"><i class="ti ti-bell"></i><strong>'+urg.length+' task'+(urg.length!=1?'s':'')+' due within 7 days</strong></div>':'';
+    ?'<div class="banner banner-blue"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><strong>'+urg.length+' task'+(urg.length!=1?'s':'')+' due within 7 days</strong></div>':'';
   var up=tasks.filter(function(t){return t.status!='Done';}).sort(function(a,b){return!a.dueDate?1:!b.dueDate?-1:new Date(a.dueDate)-new Date(b.dueDate);}).slice(0,8);
   document.getElementById('dash-tasks').innerHTML=tasks.length
     ?'<div style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Upcoming tasks</div>'+up.map(function(t){return tCard(t,true);}).join('')
-    :'<div class="empty"><i class="ti ti-upload"></i><div>Upload meeting notes to get started</div></div>';
+    :'<div class="empty"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div>Upload meeting notes to get started</div></div>';
 }
 
 function tCard(t,compact){
   var d=daysUntil(t.dueDate),alrt='';
   if(t.status!='Done'&&d!==null){
-    if(d<0)alrt='<div class="alert alert-1"><i class="ti ti-alert-circle"></i> Overdue by '+Math.abs(d)+' day'+(Math.abs(d)!=1?'s':'')+emailBtn(t)+'</div>';
-    else if(d<=1)alrt='<div class="alert alert-1"><i class="ti ti-alert-circle"></i> Due tomorrow!'+emailBtn(t)+'</div>';
-    else if(d<=3)alrt='<div class="alert alert-3"><i class="ti ti-clock"></i> Due in '+d+' days'+emailBtn(t)+'</div>';
-    else if(d<=7)alrt='<div class="alert alert-7"><i class="ti ti-clock"></i> Due in '+d+' days'+emailBtn(t)+'</div>';
+    if(d<0)alrt='<div class="alert alert-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Overdue by '+Math.abs(d)+' day'+(Math.abs(d)!=1?'s':'')+emailBtn(t)+'</div>';
+    else if(d<=1)alrt='<div class="alert alert-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Due tomorrow!'+emailBtn(t)+'</div>';
+    else if(d<=3)alrt='<div class="alert alert-3"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Due in '+d+' days'+emailBtn(t)+'</div>';
+    else if(d<=7)alrt='<div class="alert alert-7"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Due in '+d+' days'+emailBtn(t)+'</div>';
   }
   var bc=t.status=='Done'?'b-done':t.status=='In Progress'?'b-inprog':t.status=='Overdue'?'b-overdue':'b-todo';
   var atts=attachments[t.id]||[],nts=tnotes[t.id]||[];
-  var attHtml=atts.length?'<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:2px">'+atts.map(function(a){return'<span class="attach-pill" data-tid="'+t.id+'" data-aid="'+a.id+'"><i class="ti ti-paperclip" style="font-size:12px"></i>'+esc(shortName(a.name))+'</span>';}).join('')+'</div>':'';
+  var attHtml=atts.length?'<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:2px">'+atts.map(function(a){return'<span class="attach-pill" data-tid="'+t.id+'" data-aid="'+a.id+'"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>'+esc(shortName(a.name))+'</span>';}).join('')+'</div>':'';
   var noteSnip=nts.length?'<div style="margin-top:5px;font-size:12px;color:var(--text2);font-style:italic">'+esc(nts[nts.length-1].text.substring(0,90))+(nts[nts.length-1].text.length>90?'…':'')+'</div>':'';
-  var editedBy=t.lastEditedBy?'<span><i class="ti ti-pencil"></i>'+esc(t.lastEditedBy)+'</span>':'';
+  var editedBy=t.lastEditedBy?'<span><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>'+esc(t.lastEditedBy)+'</span>':'';
   var rowId=(compact?'dash-':'trow-')+t.id;
   return'<div class="task-row" id="'+rowId+'">'
     +'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">'
     +'<div style="flex:1;min-width:0">'
     +'<div class="task-title">'+esc(t.description)+'</div>'
     +'<div class="task-meta">'
-    +(t.owner?'<span><i class="ti ti-user"></i>'+esc(t.owner)+'</span>':'')
-    +(t.dueDate?'<span><i class="ti ti-calendar"></i>'+fmtDate(t.dueDate)+'</span>':'')
-    +(t.source?'<span><i class="ti ti-file"></i>'+esc(t.source)+'</span>':'')
-    +(nts.length?'<span><i class="ti ti-notes"></i>'+nts.length+' note'+(nts.length!=1?'s':'')+'</span>':'')
+    +(t.owner?'<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'+esc(t.owner)+'</span>':'')
+    +(t.dueDate?'<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'+fmtDate(t.dueDate)+'</span>':'')
+    +(t.source?'<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>'+esc(t.source)+'</span>':'')
+    +(nts.length?'<span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>'+nts.length+' note'+(nts.length!=1?'s':'')+'</span>':'')
     +editedBy+'</div>'
     +attHtml+noteSnip+'</div>'
     +'<div class="task-actions" style="position:relative;z-index:2;flex-shrink:0">'
     +'<span class="badge '+bc+'">'+t.status+'</span>'
     +(compact?'':
-      ' <button class="btn btn-icon btn-sm" onclick="openNotesModal(\'' +t.id+ '\')" title="Notes"><i class="ti ti-notes"></i></button>'
-      +'<button class="btn btn-icon btn-sm" onclick="openAttachModal(\'' +t.id+ '\')" title="Attachments"><i class="ti ti-paperclip"></i></button>'
-      +'<button class="btn btn-icon btn-sm" onclick="editTask(\'' +t.id+ '\')" title="Edit"><i class="ti ti-edit"></i></button>'
-      +'<button class="btn btn-icon btn-sm" onclick="delTask(\'' +t.id+ '\')" title="Delete"><i class="ti ti-trash"></i></button>')
+      ' <button class="btn btn-icon btn-sm" onclick="openNotesModal(\'' +t.id+ '\')" title="Notes"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></button>'
+      +'<button class="btn btn-icon btn-sm" onclick="openAttachModal(\'' +t.id+ '\')" title="Attachments"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>'
+      +'<button class="btn btn-icon btn-sm" onclick="editTask(\'' +t.id+ '\')" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>'
+      +'<button class="btn btn-icon btn-sm" onclick="delTask(\'' +t.id+ '\')" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>')
     +'</div>'+(alrt?'<div style="margin-top:6px">'+alrt+'</div>':'')+'</div></div>';
 }
 
@@ -460,7 +461,7 @@ function emailBtn(t){
   var days=daysUntil(t.dueDate);
   var s=encodeURIComponent('Reminder: "'+t.description+'" due '+fmtDate(t.dueDate));
   var b=encodeURIComponent('Hi '+t.owner+',\n\nThis is a reminder that the following task is due '+(days<=0?'today/overdue':days==1?'tomorrow':'in '+days+' days')+':\n\nTask: '+t.description+'\nDue: '+fmtDate(t.dueDate)+'\nStatus: '+t.status+'\n\nPlease update your status when complete.\n\nThank you!');
-  return' <a href="mailto:'+m.email+'?subject='+s+'&body='+b+'"><i class="ti ti-mail"></i> Send reminder</a>';
+  return' <a href="mailto:'+m.email+'?subject='+s+'&body='+b+'"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Send reminder</a>';
 }
 
 function renderTasks(){
@@ -470,7 +471,7 @@ function renderTasks(){
   sel.innerHTML='<option value="">All owners</option>'+owners.map(function(o){return'<option'+(o==prev?' selected':'')+'>'+esc(o)+'</option>';}).join('');
   if(prev)sel.value=prev;
   var list=tasks.filter(function(t){return(!fs||t.status==fs)&&(!fo||t.owner==fo);}).sort(function(a,b){return!a.dueDate?1:!b.dueDate?-1:new Date(a.dueDate)-new Date(b.dueDate);});
-  document.getElementById('tasks-list').innerHTML=list.length?list.map(function(t){return tCard(t,false);}).join(''):'<div class="empty"><i class="ti ti-check"></i><div>No tasks found</div></div>';
+  document.getElementById('tasks-list').innerHTML=list.length?list.map(function(t){return tCard(t,false);}).join(''):'<div class="empty"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg><div>No tasks found</div></div>';
 }
 
 function renderMeetings(){
@@ -479,15 +480,15 @@ function renderMeetings(){
       var tc=tasks.filter(function(t){return t.source==m.title;}).length;
       return'<div class="task-row"><div style="display:flex;justify-content:space-between;align-items:center">'
         +'<div><div style="font-weight:500;font-size:14px;margin-bottom:4px">'+esc(m.title)+'</div>'
-        +'<div class="task-meta">'+m.date+(tc?' <span>'+tc+' task'+(tc!=1?'s':'')+'</span>':'')+(m.updated?' <span style="color:var(--green)">'+m.updated+' updated</span>':'')+(m.added?' <span style="color:var(--purple)">'+m.added+' new</span>':'')+(m.by?' <span><i class="ti ti-user"></i>'+esc(m.by)+'</span>':'')+'</div></div>'
-        +'<button class="btn btn-icon btn-sm meet-del-btn" data-id="'+m.id+'"><i class="ti ti-trash"></i></button>'
+        +'<div class="task-meta">'+m.date+(tc?' <span>'+tc+' task'+(tc!=1?'s':'')+'</span>':'')+(m.updated?' <span style="color:var(--green)">'+m.updated+' updated</span>':'')+(m.added?' <span style="color:var(--purple)">'+m.added+' new</span>':'')+(m.by?' <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'+esc(m.by)+'</span>':'')+'</div></div>'
+        +'<button class="btn btn-icon btn-sm meet-del-btn" data-id="'+m.id+'"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>'
         +'</div></div>';
-    }).join(''):'<div class="empty"><i class="ti ti-file-description"></i><div>No meetings uploaded yet</div></div>';
+    }).join(''):'<div class="empty"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg><div>No meetings uploaded yet</div></div>';
 }
 
 function renderTeam(){
   document.getElementById('team-list').innerHTML=team.length
-    ?team.map(function(m){return'<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div class="avatar">'+initials(m.name)+'</div><div style="flex:1"><div style="font-weight:500;font-size:14px">'+esc(m.name)+'</div><div style="font-size:12px;color:var(--text2)">'+esc(m.email)+'</div></div><button class="btn btn-icon btn-sm member-del-btn" data-id="'+m.id+'"><i class="ti ti-trash"></i></button></div>';}).join('')
+    ?team.map(function(m){return'<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div class="avatar">'+initials(m.name)+'</div><div style="flex:1"><div style="font-weight:500;font-size:14px">'+esc(m.name)+'</div><div style="font-size:12px;color:var(--text2)">'+esc(m.email)+'</div></div><button class="btn btn-icon btn-sm member-del-btn" data-id="'+m.id+'"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button></div>';}).join('')
     :'<div style="color:var(--text2);font-size:13px;padding:8px 0">No team members yet.</div>';
 }
 
@@ -580,7 +581,7 @@ document.getElementById('send-btn').addEventListener('click',function(){
     showModal(
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">'
       +'<div style="font-weight:600;font-size:15px">Prompt copied!</div>'
-      +'<button class="btn btn-icon btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button></div>'
+      +'<button class="btn btn-icon btn-sm" onclick="closeModal()"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>'
       +'<p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px">The extraction prompt has been copied to your clipboard.</p>'
       +'<div style="font-size:13px;line-height:2.2">'
       +'<div><strong>1.</strong> Open <a href="https://claude.ai" target="_blank" style="color:var(--blue)">claude.ai</a> in a new tab</div>'
@@ -598,13 +599,13 @@ document.getElementById('send-btn').addEventListener('click',function(){
       var color=i===0?'var(--green)':'var(--blue)';
       chunkButtons+='<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px">'
         +'<div style="flex:1"><strong>Part '+(i+1)+'</strong> of '+totalChunks+' — ~'+Math.round(chunks[i].length/1000)+'K characters</div>'
-        +'<button class="btn btn-sm" id="copy-chunk-'+i+'" style="background:'+color+';color:#fff;border-color:'+color+'"><i class="ti ti-copy"></i> '+(i===0?'Copied ✓':'Copy')+'</button>'
+        +'<button class="btn btn-sm" id="copy-chunk-'+i+'" style="background:'+color+';color:#fff;border-color:'+color+'"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> '+(i===0?'Copied ✓':'Copy')+'</button>'
         +'</div>';
     }
     showModal(
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">'
       +'<div style="font-weight:600;font-size:15px">Long transcript — '+totalChunks+' parts</div>'
-      +'<button class="btn btn-icon btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button></div>'
+      +'<button class="btn btn-icon btn-sm" onclick="closeModal()"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>'
       +'<div style="background:var(--amber-light);color:var(--amber);border:1px solid #F0C89A;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:14px">'
       +'<strong>Your transcript is too long for one message.</strong> Send each part to Claude separately in the same conversation, in order.'
       +'</div>'
@@ -625,7 +626,7 @@ document.getElementById('send-btn').addEventListener('click',function(){
           var btn=document.getElementById('copy-chunk-'+idx);
           if(btn)btn.addEventListener('click',function(){
             copyChunk(idx);
-            this.innerHTML='<i class="ti ti-check"></i> Copied ✓';
+            this.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> Copied ✓';
             this.style.background='var(--green)';
             this.style.borderColor='var(--green)';
           });
@@ -656,7 +657,7 @@ document.getElementById('confirm-import-btn').addEventListener('click',async fun
   if(!requireUser())return;
   var btn=this;btn.innerHTML='<span class="spin"></span> Saving...';btn.disabled=true;
   await applyImport(pendingItems,pendingTitle);
-  btn.innerHTML='<i class="ti ti-check"></i> Confirm &amp; import';btn.disabled=false;
+  btn.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> Confirm &amp; import';btn.disabled=false;
   document.getElementById('preview-panel').style.display='none';
   document.getElementById('json-paste').value='';
   var st=document.getElementById('import-status');
@@ -684,7 +685,7 @@ function showPreview(items,title){
     html+='<div style="font-size:11px;font-weight:600;color:var(--purple);margin-bottom:8px;margin-top:'+(updates.length?'14px':'0')+';text-transform:uppercase;letter-spacing:.5px">New tasks</div>';
     news.forEach(function(item){
       html+='<div class="preview-new"><div style="font-weight:500;font-size:13px;margin-bottom:3px">'+esc(item.description)+'</div>'
-        +'<div style="font-size:12px;color:var(--text2)">'+(item.owner?'<i class="ti ti-user"></i> '+esc(item.owner)+' &nbsp;':'')+(item.dueDate?'<i class="ti ti-calendar"></i> '+fmtDate(item.dueDate):'')+'</div>'
+        +'<div style="font-size:12px;color:var(--text2)">'+(item.owner?'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> '+esc(item.owner)+' &nbsp;':'')+(item.dueDate?'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> '+fmtDate(item.dueDate):'')+'</div>'
         +(item.contextNote?'<div style="font-size:12px;color:var(--text2);font-style:italic;margin-top:3px">'+esc(item.contextNote)+'</div>':'')
         +'</div>';
     });
@@ -727,7 +728,7 @@ document.getElementById('save-new-task-btn').addEventListener('click',async func
   tasks.push({id:id,description:desc,owner:document.getElementById('nt-owner').value.trim(),dueDate:document.getElementById('nt-due').value,status:document.getElementById('nt-status').value,source:document.getElementById('nt-source').value.trim(),addedBy:currentUser,added:todayStr()});
   if(note){tnotes[id]=[{id:uid(),text:note,date:todayStr(),auto:false,by:currentUser}];await saveNotes();}
   checkOverdue();await saveTasks();renderTasks();renderDashboard();
-  btn.innerHTML='<i class="ti ti-check"></i> Save task';btn.disabled=false;
+  btn.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> Save task';btn.disabled=false;
   document.getElementById('add-task-form').style.display='none';
   ['nt-desc','nt-owner','nt-due','nt-source','nt-notes'].forEach(function(x){document.getElementById(x).value='';});
   document.getElementById('nt-status').value='To Do';
@@ -773,17 +774,17 @@ function editTask(id){
         +'</div>'
         +'<label class="lbl">Add a note</label>'
         +'<textarea id="e-note" rows="2" placeholder="Add a note or update..."></textarea>'
-        +(currentUser?'':'<div style="font-size:12px;color:var(--amber);margin-top:8px;padding:8px 10px;background:var(--amber-light);border-radius:6px"><i class="ti ti-alert-triangle"></i> Select your name in the sidebar before saving</div>')
+        +(currentUser?'':'<div style="font-size:12px;color:var(--amber);margin-top:8px;padding:8px 10px;background:var(--amber-light);border-radius:6px"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Select your name in the sidebar before saving</div>')
         +'<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">'
         +'<button class="btn" onclick="renderTasks()">Cancel</button>'
-        +'<button class="btn btn-sm" onclick="openNotesModal(\'' +id+ '\')" style="margin-right:auto"><i class="ti ti-notes"></i> All notes</button>'
-        +'<button class="btn btn-primary" onclick="saveEdit(\'' +id+ '\')" id="es-'+id+'"><i class="ti ti-check"></i> Save</button>'
+        +'<button class="btn btn-sm" onclick="openNotesModal(\'' +id+ '\')" style="margin-right:auto"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg> All notes</button>'
+        +'<button class="btn btn-primary" onclick="saveEdit(\'' +id+ '\')" id="es-'+id+'"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> Save</button>'
         +'</div></div>';
     } else {
       html+=tCard(task,false);
     }
   });
-  document.getElementById('tasks-list').innerHTML=html||'<div class="empty"><i class="ti ti-check"></i><div>No tasks found</div></div>';
+  document.getElementById('tasks-list').innerHTML=html||'<div class="empty"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg><div>No tasks found</div></div>';
 
   // Wire up buttons and focus
   var di=document.getElementById('e-desc');
@@ -811,14 +812,14 @@ function openNotesModal(tid){
   var t=tasks.find(function(t){return t.id===tid;});if(!t)return;
   var notes=tnotes[tid]||[];
   showModal('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'
-    +'<div style="font-weight:600;font-size:15px">Notes</div><button class="btn btn-icon btn-sm" id="mc"><i class="ti ti-x"></i></button></div>'
+    +'<div style="font-weight:600;font-size:15px">Notes</div><button class="btn btn-icon btn-sm" id="mc"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>'
     +'<div style="font-size:13px;color:var(--text2);margin-bottom:12px;font-style:italic">'+esc(t.description.substring(0,70))+(t.description.length>70?'…':'')+'</div>'
     +'<div style="max-height:240px;overflow-y:auto;margin-bottom:14px">'
-    +(notes.length?notes.map(function(n){return'<div class="note-entry"><div class="note-meta">'+n.date+(n.by?' · <strong>'+esc(n.by)+'</strong>':'')+' · '+(n.auto?'<span style="color:var(--green)">auto-extracted</span>':'manual')+'</div><div style="font-size:13px;line-height:1.5">'+esc(n.text)+'</div><button class="btn btn-sm" style="margin-top:5px;font-size:11px" data-ndel="'+n.id+'" data-ntid="'+tid+'"><i class="ti ti-trash"></i> Remove</button></div>';}).join('')
+    +(notes.length?notes.map(function(n){return'<div class="note-entry"><div class="note-meta">'+n.date+(n.by?' · <strong>'+esc(n.by)+'</strong>':'')+' · '+(n.auto?'<span style="color:var(--green)">auto-extracted</span>':'manual')+'</div><div style="font-size:13px;line-height:1.5">'+esc(n.text)+'</div><button class="btn btn-sm" style="margin-top:5px;font-size:11px" data-ndel="'+n.id+'" data-ntid="'+tid+'"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg> Remove</button></div>';}).join('')
     :'<div style="color:var(--text2);font-size:13px;padding:10px 0">No notes yet.</div>')
     +'</div><label class="lbl" style="margin-top:0">Add a note</label>'
     +'<textarea id="mn-text" rows="3" placeholder="Type a note or update..." style="margin-bottom:12px"></textarea>'
-    +'<div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn" id="mc2">Close</button><button class="btn btn-primary" id="mn-add"><i class="ti ti-plus"></i> Add note</button></div>');
+    +'<div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn" id="mc2">Close</button><button class="btn btn-primary" id="mn-add"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add note</button></div>');
   document.getElementById('mc').onclick=closeModal;document.getElementById('mc2').onclick=closeModal;
   document.getElementById('mn-add').onclick=function(){addNote(tid);};
   document.querySelectorAll('[data-ndel]').forEach(function(b){b.onclick=function(){delNote(b.dataset.ntid,b.dataset.ndel);};});
@@ -840,11 +841,11 @@ function openAttachModal(tid){
   var t=tasks.find(function(t){return t.id===tid;});if(!t)return;
   var atts=attachments[tid]||[];
   showModal('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'
-    +'<div style="font-weight:600;font-size:15px">Attachments</div><button class="btn btn-icon btn-sm" id="amc"><i class="ti ti-x"></i></button></div>'
+    +'<div style="font-weight:600;font-size:15px">Attachments</div><button class="btn btn-icon btn-sm" id="amc"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>'
     +'<div style="font-size:13px;color:var(--text2);font-style:italic;margin-bottom:12px">'+esc(t.description.substring(0,70))+(t.description.length>70?'…':'')+'</div>'
-    +(atts.length?atts.map(function(a){return'<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px"><i class="ti ti-'+fileIcon(a.name)+'" style="font-size:20px;color:var(--text2)"></i><div style="flex:1;min-width:0"><div style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(a.name)+'</div><div style="font-size:11px;color:var(--text2)">'+a.size+' · '+a.date+(a.by?' · '+esc(a.by):'')+'</div></div><button class="btn btn-icon btn-sm" data-aprev-tid="'+tid+'" data-aprev-aid="'+a.id+'" title="Preview"><i class="ti ti-eye"></i></button><button class="btn btn-icon btn-sm" data-arm-tid="'+tid+'" data-arm-aid="'+a.id+'" title="Remove"><i class="ti ti-trash"></i></button></div>';}).join('')
+    +(atts.length?atts.map(function(a){return'<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-4px;color:var(--text2);flex-shrink:0"><path d=\"M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z\"/><polyline points=\"13 2 13 9 20 9\"/></svg><div style="flex:1;min-width:0"><div style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(a.name)+'</div><div style="font-size:11px;color:var(--text2)">'+a.size+' · '+a.date+(a.by?' · '+esc(a.by):'')+'</div></div><button class="btn btn-icon btn-sm" data-aprev-tid="'+tid+'" data-aprev-aid="'+a.id+'" title="Preview"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="btn btn-icon btn-sm" data-arm-tid="'+tid+'" data-arm-aid="'+a.id+'" title="Remove"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button></div>';}).join('')
     :'<div style="color:var(--text2);font-size:13px;padding:12px 0;text-align:center">No attachments yet.</div>')
-    +'<div class="attach-zone" id="amdrop"><i class="ti ti-paperclip" style="font-size:22px;display:block;margin-bottom:4px"></i>Click to attach a file <span style="font-size:11px;color:var(--text3)">(max 1 MB)</span></div>'
+    +'<div class="attach-zone" id="amdrop"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>Click to attach a file <span style="font-size:11px;color:var(--text3)">(max 1 MB)</span></div>'
     +'<input type="file" id="amf" style="display:none">');
   document.getElementById('amc').onclick=closeModal;
   document.getElementById('amdrop').onclick=function(){document.getElementById('amf').click();};
@@ -868,8 +869,8 @@ function previewAttach(tid,aid){
   var c='';
   if(att.type&&att.type.startsWith('image/'))c='<img src="'+att.data+'" style="max-width:100%;border-radius:8px">';
   else if(att.name.match(/\.(txt|md|csv)$/i)||(att.type&&att.type.includes('text'))){try{c='<pre style="white-space:pre-wrap;font-size:12px;font-family:var(--mono);background:var(--surface2);padding:14px;border-radius:8px;max-height:360px;overflow-y:auto">'+esc(atob(att.data.split(',')[1]))+'</pre>';}catch(e){c='<p style="color:var(--text2)">Preview unavailable.</p>';}}
-  else{c='<div style="text-align:center;padding:36px;color:var(--text2)"><i class="ti ti-file" style="font-size:40px;display:block;margin-bottom:12px"></i><div style="margin-bottom:16px">Preview not available for this file type.</div><button class="btn btn-primary" id="att-dl"><i class="ti ti-download"></i> Download file</button></div>';}
-  showModal('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:460px">'+esc(att.name)+'</div><div style="display:flex;gap:6px;flex-shrink:0"><button class="btn btn-icon btn-sm" id="pbk"><i class="ti ti-arrow-left"></i></button><button class="btn btn-icon btn-sm" id="pcl"><i class="ti ti-x"></i></button></div></div>'+c);
+  else{c='<div style="text-align:center;padding:36px;color:var(--text2)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg><div style="margin-bottom:16px">Preview not available for this file type.</div><button class="btn btn-primary" id="att-dl"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download file</button></div>';}
+  showModal('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:460px">'+esc(att.name)+'</div><div style="display:flex;gap:6px;flex-shrink:0"><button class="btn btn-icon btn-sm" id="pbk"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px"><polyline points="15 18 9 12 15 6"/></svg></button><button class="btn btn-icon btn-sm" id="pcl"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div></div>'+c);
   document.getElementById('pcl').onclick=closeModal;
   document.getElementById('pbk').onclick=function(){openAttachModal(tid);};
   var dlb=document.getElementById('att-dl');if(dlb)dlb.onclick=function(){var a=document.createElement('a');a.href=att.data;a.download=att.name;a.click();};
