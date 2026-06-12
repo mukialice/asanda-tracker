@@ -530,19 +530,108 @@ document.getElementById('send-btn').addEventListener('click',function(){
   document.getElementById('import-title').value=title;
   var existSum=tasks.slice(0,50).map(function(t,i){return i+'. id:'+t.id+' | '+t.description+(t.owner?' | owner:'+t.owner:'')+(t.dueDate?' | due:'+t.dueDate:'')+(t.status?' | status:'+t.status:'');}).join('\n');
   var tod=new Date().toISOString().split('T')[0];
-  var prompt='TASK_EXTRACTION_REQUEST\nMeeting title: "'+title+'"\nToday: '+tod+'\n\nExisting tasks:\n'+(existSum||'(none yet)')+'\n\nInstructions: Extract all action items. Input may be notes or raw transcript — handle both, ignore small talk. For each task check if it matches an existing task. Return ONLY a ```json [...] ``` code block. Each item: description, owner, dueDate (YYYY-MM-DD or ""), status, contextNote, matchedId, changedFields.\n\nContent:\n---\n'+notes.substring(0,6000)+'\n---';
-  var ta=document.createElement('textarea');ta.value=prompt;ta.style.position='fixed';ta.style.top='-9999px';document.body.appendChild(ta);ta.select();
-  try{document.execCommand('copy');}catch(e){}
-  document.body.removeChild(ta);
-  showModal('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-weight:600;font-size:15px">Prompt copied!</div><button class="btn btn-icon btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button></div>'
-    +'<p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px">The extraction prompt has been copied to your clipboard. Here\'s what to do next:</p>'
-    +'<div style="font-size:13px;line-height:2">'
-    +'<div><strong>1.</strong> Open <a href="https://claude.ai" target="_blank" style="color:var(--blue)">claude.ai</a> in a new tab</div>'
-    +'<div><strong>2.</strong> Paste the prompt (Ctrl+V) and send it</div>'
-    +'<div><strong>3.</strong> Copy Claude\'s full reply (the ```json``` block)</div>'
-    +'<div><strong>4.</strong> Come back here, paste into Step 3, and click Preview</div>'
-    +'</div>'
-    +'<div style="margin-top:14px;text-align:right"><button class="btn btn-primary" onclick="closeModal()">Got it</button></div>');
+
+  // Split long transcripts into chunks of ~12,000 chars at natural break points
+  var CHUNK=12000;
+  var chunks=[];
+  if(notes.length<=CHUNK){
+    chunks=[notes];
+  } else {
+    var remaining=notes;
+    while(remaining.length>0){
+      if(remaining.length<=CHUNK){chunks.push(remaining);break;}
+      // Find a good split point — look for a speaker line or newline near the chunk boundary
+      var slice=remaining.substring(0,CHUNK);
+      var splitAt=slice.lastIndexOf('\nSpeaker');
+      if(splitAt<CHUNK*0.5)splitAt=slice.lastIndexOf('\n\n');
+      if(splitAt<0)splitAt=slice.lastIndexOf('\n');
+      if(splitAt<0)splitAt=CHUNK;
+      chunks.push(remaining.substring(0,splitAt).trim());
+      remaining=remaining.substring(splitAt).trim();
+    }
+  }
+
+  var totalChunks=chunks.length;
+  var currentChunk=0;
+
+  function buildPrompt(chunkIndex){
+    var isFirst=chunkIndex===0;
+    var isLast=chunkIndex===totalChunks-1;
+    var chunkLabel=totalChunks>1?' (Part '+(chunkIndex+1)+' of '+totalChunks+')':'';
+    var instruction=totalChunks>1
+      ?(isLast
+        ? 'This is the FINAL part of the transcript. Extract all action items from this part AND combine with any tasks already identified. Return the COMPLETE combined task list as a single ```json [...] ``` block.'
+        : 'This is part '+(chunkIndex+1)+' of '+totalChunks+' of a long transcript. Extract action items from this part only. Return a ```json [...] ``` block. I will send the remaining parts next.')
+      :'Extract all action items. Input may be notes or raw transcript — handle both, ignore small talk. For each task check if it matches an existing task. Return ONLY a ```json [...] ``` code block.';
+    return 'TASK_EXTRACTION_REQUEST'+chunkLabel+'\nMeeting title: "'+title+'"\nToday: '+tod+'\n\nExisting tasks:\n'+(isFirst?(existSum||'(none yet)'):'(see previous parts)')+'\n\nInstructions: '+instruction+' Each item needs: description, owner, dueDate (YYYY-MM-DD or ""), status, contextNote, matchedId, changedFields.\n\nContent:\n---\n'+chunks[chunkIndex]+'\n---';
+  }
+
+  function copyChunk(index){
+    var prompt=buildPrompt(index);
+    var ta=document.createElement('textarea');ta.value=prompt;ta.style.position='fixed';ta.style.top='-9999px';document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  copyChunk(0);
+
+  if(totalChunks===1){
+    showModal(
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">'
+      +'<div style="font-weight:600;font-size:15px">Prompt copied!</div>'
+      +'<button class="btn btn-icon btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button></div>'
+      +'<p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px">The extraction prompt has been copied to your clipboard.</p>'
+      +'<div style="font-size:13px;line-height:2.2">'
+      +'<div><strong>1.</strong> Open <a href="https://claude.ai" target="_blank" style="color:var(--blue)">claude.ai</a> in a new tab</div>'
+      +'<div><strong>2.</strong> Paste the prompt (Ctrl+V) and send it</div>'
+      +'<div><strong>3.</strong> Copy Claude\'s full reply (the ```json``` block)</div>'
+      +'<div><strong>4.</strong> Come back here, paste into Step 3, and click Preview</div>'
+      +'</div>'
+      +'<div style="margin-top:14px;text-align:right"><button class="btn btn-primary" onclick="closeModal()">Got it</button></div>'
+    );
+  } else {
+    // Multi-part modal with copy buttons for each chunk
+    var chunkButtons='';
+    for(var i=0;i<totalChunks;i++){
+      var label=i===0?'Copy Part 1 (already copied)':'Copy Part '+(i+1);
+      var color=i===0?'var(--green)':'var(--blue)';
+      chunkButtons+='<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px">'
+        +'<div style="flex:1"><strong>Part '+(i+1)+'</strong> of '+totalChunks+' — ~'+Math.round(chunks[i].length/1000)+'K characters</div>'
+        +'<button class="btn btn-sm" id="copy-chunk-'+i+'" style="background:'+color+';color:#fff;border-color:'+color+'"><i class="ti ti-copy"></i> '+(i===0?'Copied ✓':'Copy')+'</button>'
+        +'</div>';
+    }
+    showModal(
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">'
+      +'<div style="font-weight:600;font-size:15px">Long transcript — '+totalChunks+' parts</div>'
+      +'<button class="btn btn-icon btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button></div>'
+      +'<div style="background:var(--amber-light);color:var(--amber);border:1px solid #F0C89A;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:14px">'
+      +'<strong>Your transcript is too long for one message.</strong> Send each part to Claude separately in the same conversation, in order.'
+      +'</div>'
+      +'<div style="font-size:13px;font-weight:600;margin-bottom:8px">How to process a multi-part transcript:</div>'
+      +'<div style="font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:14px">'
+      +'<div>1. Part 1 is already copied. Open <a href="https://claude.ai" target="_blank" style="color:var(--blue)">claude.ai</a> and paste it.</div>'
+      +'<div>2. Wait for Claude\'s reply, then copy Part 2 below and send it in the <strong>same conversation</strong>.</div>'
+      +'<div>3. Repeat for each part. On the <strong>last part</strong>, Claude will return the full combined task list.</div>'
+      +'<div>4. Copy the final JSON reply and paste it into Step 3 back here.</div>'
+      +'</div>'
+      +chunkButtons
+      +'<div style="margin-top:14px;text-align:right"><button class="btn btn-primary" onclick="closeModal()">Got it</button></div>'
+    );
+    // Wire up copy buttons
+    setTimeout(function(){
+      for(var j=0;j<totalChunks;j++){
+        (function(idx){
+          var btn=document.getElementById('copy-chunk-'+idx);
+          if(btn)btn.addEventListener('click',function(){
+            copyChunk(idx);
+            this.innerHTML='<i class="ti ti-check"></i> Copied ✓';
+            this.style.background='var(--green)';
+            this.style.borderColor='var(--green)';
+          });
+        })(j);
+      }
+    },100);
+  }
 });
 document.getElementById('clear-paste-btn').addEventListener('click',function(){document.getElementById('json-paste').value='';document.getElementById('import-status').textContent='';document.getElementById('preview-panel').style.display='none';});
 
