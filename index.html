@@ -459,9 +459,17 @@ function emailBtn(t){
   var m=team.find(function(x){return x.name.toLowerCase()===(t.owner||'').toLowerCase();});
   if(!m||!m.email)return'';
   var days=daysUntil(t.dueDate);
-  var s=encodeURIComponent('Reminder: "'+t.description+'" due '+fmtDate(t.dueDate));
-  var b=encodeURIComponent('Hi '+t.owner+',\n\nThis is a reminder that the following task is due '+(days<=0?'today/overdue':days==1?'tomorrow':'in '+days+' days')+':\n\nTask: '+t.description+'\nDue: '+fmtDate(t.dueDate)+'\nStatus: '+t.status+'\n\nPlease update your status when complete.\n\nThank you!');
-  return' <a href="mailto:'+m.email+'?subject='+s+'&body='+b+'"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Send reminder</a>';
+  var urgency=days<=0?'today — it is overdue':days==1?'tomorrow':('in '+days+' days');
+  var subject='ASANDA Task Reminder: "'+t.description+'" due '+fmtDate(t.dueDate);
+  var body='Hi '+t.owner+',\n\nThis is a friendly reminder that the following task is due '+urgency+':\n\nTask: '+t.description+'\nDue: '+fmtDate(t.dueDate)+'\nStatus: '+t.status+'\n\nPlease log into the ASANDA tracker and update the status when complete.\n\nThank you!';
+  // Build both Gmail and mailto links — show Gmail as primary, mailto as fallback
+  var gmailUrl='https://mail.google.com/mail/?view=cm&to='+encodeURIComponent(m.email)+'&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  var mailtoUrl='mailto:'+m.email+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  var mailSvg='<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;pointer-events:none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';
+  return' <span style="display:inline-flex;gap:4px;align-items:center;flex-wrap:wrap">'
+    +'<a href="'+gmailUrl+'" target="_blank" rel="noopener" style="color:inherit;font-weight:500;font-size:12px;text-decoration:none;border:1px solid currentColor;border-radius:4px;padding:1px 7px;white-space:nowrap">'+mailSvg+' Gmail</a>'
+    +'<a href="'+mailtoUrl+'" style="color:inherit;font-size:12px;text-decoration:none;opacity:0.7;white-space:nowrap" title="Opens your default email app">or mail app</a>'
+    +'</span>';
 }
 
 function renderTasks(){
